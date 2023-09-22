@@ -21,7 +21,8 @@ module.exports = {
       },
   },
   plugins: [
-      require('tw-elements/dist/plugin.cjs')
+      require('tw-elements/dist/plugin.cjs'),
+      require('@tailwindcss/forms')
   ],
 }
 
