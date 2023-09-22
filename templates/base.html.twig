@@ -1,19 +1,38 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>SnowTriks | {% block title %}{% endblock %}</title>
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
 
-        {% block body %}{% endblock %}
-    </body>
+<body>
+<header>
+    <nav class="p-5 bg-white shadow">
+        <div>
+            <a href="{{ path('app_default') }}">
+                <img src="{{ asset('images/logo.png') }}" alt="SnowTricks logo">
+            </a>
+        </div>
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="">Tricks</a></li>
+            <li><a href="">Create a trick</a></li>
+            <li><a href="">Users</a></li>
+            <li><a href="">Create a user</a></li>
+            <li><a href="">Login</a></li>
+            <li><a href="">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+{% block body %}{% endblock %}
+</body>
 </html>
