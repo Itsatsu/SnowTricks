@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GroupRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
@@ -23,6 +25,14 @@ class Group
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Tricks::class)]
+    private Collection $tricks;
+
+    public function __construct()
+    {
+        $this->tricks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -61,6 +71,36 @@ class Group
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tricks>
+     */
+    public function getTricks(): Collection
+    {
+        return $this->tricks;
+    }
+
+    public function addTrick(Tricks $trick): static
+    {
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks->add($trick);
+            $trick->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Tricks $trick): static
+    {
+        if ($this->tricks->removeElement($trick)) {
+            // set the owning side to null (unless already changed)
+            if ($trick->getCategorie() === $this) {
+                $trick->setCategorie(null);
+            }
+        }
 
         return $this;
     }
