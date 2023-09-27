@@ -3,7 +3,112 @@
 {% block title %}Hello DefaultController!{% endblock %}
 
 {% block body %}
-    <h1 class="text-3xl font-bold underline">
-        Hello world!
-    </h1>
+    <section class="relative overflow-hidden bg-cover bg-no-repeat h-[200vw] md:h-[81vw] lg:h-[54vw] xl:h-[47.3vw]"
+             style="background-position: 60%;background-image: url('{{ asset('images/cover.jpg') }}');">
+        <div
+                class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed">
+            <div class="flex h-full items-center justify-center   ">
+                <div class=" text-center text-white backdrop-blur-md border-0 rounded-2xl p-4 pb-5">
+                    <h1 class="mb-6 text-7xl font-bold text-primary2">SnowTricks</h1>
+                    <h3 class="mb-8 text-3xl font-bold text-secondary2">Le site du Tricks</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="xl:mx-32 mx-5 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 mt-20 gap-x-10 gap-y-5">
+        <article class="group relative bg-info-50 px-2 py-2 rounded-lg">
+            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-44 ">
+                <img src="{{ asset('images/tricks 1.jpg') }}" alt="un tricks"
+                     class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+            </div>
+            <div class="mt-4 flex justify-between items-center ">
+                <div>
+                    <h3 class="text-sm text-gray-700">
+                        <a href="#">
+                            <span aria-hidden="true" class="absolute inset-0"></span>
+                            Tricks name
+                        </a>
+                    </h3>
+                </div>
+                <p class="text-sm font-medium text-gray-900">$35</p>
+            </div>
+        </article>
+        <article class="group relative bg-info-50 px-2 py-2 rounded-lg">
+            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-44 ">
+                <img src="{{ asset('images/tricks 1.jpg') }}" alt="un tricks"
+                     class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+            </div>
+            <div class="mt-4 flex justify-between">
+                <div>
+                    <h3 class="text-sm text-gray-700">
+                        <a href="#">
+                            <span aria-hidden="true" class="absolute inset-0"></span>
+                            Tricks name
+                        </a>
+                    </h3>
+                </div>
+                <p class="text-sm font-medium text-gray-900">$35</p>
+            </div>
+        </article>
+        <article class="group relative bg-info-50 px-2 py-2 rounded-lg">
+            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-44 ">
+                <img src="{{ asset('images/tricks 1.jpg') }}" alt="un tricks"
+                     class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+            </div>
+            <div class="mt-4 flex justify-between">
+                <div>
+                    <h3 class="text-sm text-gray-700">
+                        <a href="#">
+                            <span aria-hidden="true" class="absolute inset-0"></span>
+                            Tricks name
+                        </a>
+                    </h3>
+                </div>
+                <p class="text-sm font-medium text-gray-900">$35</p>
+            </div>
+        </article>
+        <article class="group relative bg-info-50 px-2 py-2 rounded-lg">
+            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-44 ">
+                <img src="{{ asset('images/tricks 1.jpg') }}" alt="un tricks"
+                     class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+            </div>
+            <div class="mt-4 flex justify-between">
+                <div>
+                    <h3 class="text-sm text-gray-700">
+                        <a href="#">
+                            <span aria-hidden="true" class="absolute inset-0"></span>
+                            Tricks name
+                        </a>
+                    </h3>
+                </div>
+                <p class="text-sm font-medium text-gray-900">$35</p>
+            </div>
+        </article>
+        <article class="group relative bg-info-50 px-2 py-2 rounded-lg">
+            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-44 ">
+                <img src="{{ asset('images/tricks 1.jpg') }}" alt="un tricks"
+                     class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+            </div>
+            <div class="mt-4 flex justify-between">
+                <div>
+                    <h3 class="text-sm text-gray-700">
+                        <a href="#">
+                            <span aria-hidden="true" class="absolute inset-0"></span>
+                            Basic Tee
+                        </a>
+                    </h3>
+                    <p class="mt-1 text-sm text-gray-500">Black</p>
+                </div>
+                <p class="text-sm font-medium text-gray-900">$35</p>
+            </div>
+        </article>
+    </section>
+    <section class="flex justify-center pt-5">
+        <div class="inline-flex flex-col  justify-center font-medium px-2 bg-primary2 rounded-md lg:hover:-translate-y-1.5  lg:m-2 lg:p-2 lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 ">
+            <a href="#" type="button" class="inline-flex w-full flex-col items-center group">
+                <span class="text-2xl">Voir plus de résultat</span>
+            </a>
+        </div>
+    </section>
+
 {% endblock %}
