@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints AS Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -18,9 +19,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un nom d\'utilisateur.')]
+    #[Assert\Unique(message: 'Ce nom d\'utilisateur est déjà utilisé.')]
+    #[Assert\Length(min: 5, max: 180,
+        minMessage: 'Le nom d\'utilisateur doit contenir au moins {{ limit }} caractères.',
+        maxMessage: 'Le nom d\'utilisateur doit contenir au maximum {{ limit }} caractères.'
+    )]
+
+    #assert le username de dois pas exitster
+
     private ?string $username = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un email')]
+    #[Assert\Email(message: 'Veuillez renseigner un email valide')]
+    #[Assert\Unique(message: 'Cet email est déjà utilisé')]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -30,15 +43,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un mot de passe')]
+
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $token = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un prénom')]
+    #[Assert\Assert\Regex(
+        pattern: '/^[a-zA-Z\-]+$/',
+        message: 'Le prénom ne peut contenir que des lettres et des tirets.'
+    )]
+    #[Assert\Length(max: 100,
+        maxMessage: 'Le nom prénom doit contenir au maximum {{ limit }} caractères.'
+    )]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un nom')]
+    #[Assert\Length(max: 100,
+        maxMessage: 'Le nom nom doit contenir au maximum {{ limit }} caractères.'
+    )]
     private ?string $lastName = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Media::class)]
