@@ -14,12 +14,7 @@ class UserValidator extends ConstraintValidator
         if (null === $value || '' === $value) {
             return;
         }
-        //faire un validateur pour la classe user lors de l'inscription pour vérifier que les données sont correctes
 
-
-
-
-        // TODO: implement the validation here
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ value }}', $value)
             ->addViolation();
