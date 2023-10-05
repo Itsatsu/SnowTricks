@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints AS Assert;
 
 #[ORM\Entity(repositoryClass: TricksRepository::class)]
 class Tricks
@@ -17,9 +18,12 @@ class Tricks
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un nom de figure.')]
     private ?string $name = null;
 
+
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner une description.')]
     private ?string $description = null;
 
     #[ORM\Column]
