@@ -31,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $username = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\NotBlank(message: 'Veuillez renseigner un email')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre email')]
     #[Assert\Email(message: 'Veuillez renseigner un email valide')]
     #[Assert\Unique(message: 'Cet email est déjà utilisé')]
     private ?string $email = null;
@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'Veuillez renseigner un mot de passe')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre mot de passe')]
 
     private ?string $password = null;
 
@@ -51,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $token = null;
 
     #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'Veuillez renseigner un prénom')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre prénom')]
     #[Assert\Assert\Regex(
         pattern: '/^[a-zA-Z\-]+$/',
         message: 'Le prénom ne peut contenir que des lettres et des tirets.'
