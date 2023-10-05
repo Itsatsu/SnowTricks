@@ -38,6 +38,7 @@ class Tricks
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner une catégorie.')]
     private ?Group $categorie = null;
 
     #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Media::class)]
