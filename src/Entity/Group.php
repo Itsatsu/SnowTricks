@@ -6,6 +6,7 @@ use App\Repository\GroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints AS Assert;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
@@ -17,9 +18,17 @@ class Group
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un nom de catégorie.')]
+    #[Assert\Length(min: 3, max: 255,
+        minMessage: 'Le nom de la catégorie doit contenir au moins {{ limit }} caractères.',
+        maxMessage: 'Le nom de la catégorie doit contenir au maximum {{ limit }} caractères.'
+    )]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255,
+        maxMessage: 'Le nom de la catégorie doit contenir au maximum {{ limit }} caractères.'
+    )]
     private ?string $description = null;
 
     #[ORM\ManyToOne]
