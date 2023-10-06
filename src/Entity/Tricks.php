@@ -24,7 +24,7 @@ class Tricks
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'Veuillez renseigner une description.')]
-    #[Assert\length(max: 255,
+    #[Assert\Length(max: 255,
         maxMessage: 'Le nom de la catégorie doit contenir au maximum {{ limit }} caractères.'
     )]
     private ?string $description = null;
