@@ -15,6 +15,7 @@
         </div>
         <div class="mt-2">
             {{ form_widget(form.username,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+            <div class="text-danger">{{ form_errors(form.username) }} </div>
         </div>
     </div>
     <div>
@@ -23,6 +24,7 @@
         </div>
         <div class="mt-2">
             {{ form_widget(form.email,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+            <div class="text-danger">{{ form_errors(form.email) }}</div>
         </div>
     </div>
     <div>
@@ -31,6 +33,7 @@
         </div>
         <div class="mt-2">
             {{ form_widget(form.firstName,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+            <div class="text-danger">{{ form_errors(form.firstName) }}</div>
         </div>
     </div>
     <div>
@@ -39,6 +42,7 @@
         </div>
         <div class="mt-2">
             {{ form_widget(form.lastName,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+            <div class="text-danger">{{ form_errors(form.lastName) }}</div>
         </div>
     </div>
     <div>
@@ -47,6 +51,7 @@
         </div>
         <div class="mt-2">
             {{ form_widget(form.password,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+            <div class="text-danger">{{ form_errors(form.password) }}</div>
         </div>
     </div>
 
