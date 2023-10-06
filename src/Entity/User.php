@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints AS Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['username'], message: 'Un compte existe déjà avec ce nom d\'utilisateur.')]
+#[UniqueEntity(fields: ['username'], message: "Un compte existe déjà avec ce nom d'utilisateur.")]
 #[UniqueEntity(fields: ['email'], message: 'Un compte existe déjà avec cet email.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -22,10 +22,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\NotBlank(message: 'Veuillez renseigner un nom d\'utilisateur.')]
+    #[Assert\NotBlank(message: "Veuillez renseigner un nom d'utilisateur.")]
     #[Assert\Length(min: 5, max: 180,
-        minMessage: 'Le nom d\'utilisateur doit contenir au moins {{ limit }} caractères.',
-        maxMessage: 'Le nom d\'utilisateur doit contenir au maximum {{ limit }} caractères.'
+        minMessage: "Le nom d'utilisateur doit contenir au moins {{ limit }} caractères.",
+        maxMessage: "Le nom d'utilisateur doit contenir au maximum {{ limit }} caractères."
     )]
 
     #assert le username de dois pas exitster
