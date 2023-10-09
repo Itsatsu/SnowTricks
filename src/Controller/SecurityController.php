@@ -56,9 +56,10 @@ class SecurityController extends AbstractController
             $filePath = realpath(__DIR__ . '/../../public/assets/images/logo.png');
             $user->setPhotoPath('/assets/images/avatar.jpg');
             $user->setPhotoName('Avatar par défaut');
-            $mail->to($user->getEmail());
-            $mail->subject("SnowTricks - Activation de votre compte");
-            $mail->setTemplate("mail/Activation.html.twig", [
+
+            $mail->to($user->getEmail())
+            ->subject("SnowTricks - Activation de votre compte")
+            ->setTemplate("mail/Activation.html.twig", [
                 'user' => $user,
             ]);
 
