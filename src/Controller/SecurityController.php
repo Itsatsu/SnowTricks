@@ -51,7 +51,9 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $token = random_bytes(24);
             $user->setToken(bin2hex($token));
-
+            $user->setRoles(['ROLE_USER']);
+            $user->setPhotoPath('/assets/images/avatar.jpg');
+            $user->setPhotoName('Avatar par défaut');
             $mail->to($user->getEmail());
             $mail->subject("SnowTricks - Activation de votre compte");
             $mail->setTemplate("mail/Activation.html.twig", [
