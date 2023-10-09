@@ -1,1 +1,26 @@
-<
+{% extends 'mail/base.html.twig'%}
+
+{% block title %}SnowTricks - Activation du compte{% endblock %}
+
+{% block body %}
+                <h2 class="text-md py-2 font-bold">
+                    Salut {{ user.firstname }} !
+                </h2>
+                <p class="pb-2">Bienvue sur SnowTricks, le site de partage de figures de snowboard !</p>
+                <p>On est super content de t'avoir parmi nous,
+                on espère que tu vas t'éclater !
+                il manque 10% pour pouvoir partager tes figures préférées !</p>
+                <div class="w-96 bg-neutral-200 dark:bg-neutral-600 rounded-md border-2 border-primary2 md:m-auto mt-2 mb-5">
+                    <div
+                            class="bg-primary2 p-1 text-center text-xs font-medium leading-none text-primary-100"
+                            style="width: 90%">
+                       Inscription rempli à 90%
+                    </div>
+                </div>
+                <p class="mt-10">Il ne te reste plus qu'à confirmer ton adresse mail en cliquant sur le bouton ci-dessous :</p>
+                <div class=" font-medium px-2 bg-accent rounded-md lg:p-2 w-72 m-auto">
+                    <a href="{{path('app_activation', {'token': user.token})  }}" type="button" class="inline-flex w-full flex-col items-center group text-white">
+                        <span class="text-2xl text-background2 ">Valider mon email</span>
+                    </a>
+                </div>
+{% endblock %}
