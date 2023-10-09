@@ -95,7 +95,7 @@
 
                 </div>
         {% endfor %}
-    {% for message in app.flashes('alerte') %}
+    {% for message in app.flashes('error') %}
         <div class="bg-danger-300 flex justify-center p-2" >
             {{ message }}
 
