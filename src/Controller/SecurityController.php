@@ -52,6 +52,7 @@ class SecurityController extends AbstractController
             $token = random_bytes(24);
             $user->setToken(bin2hex($token));
             $user->setRoles(['ROLE_USER']);
+            $filePath = realpath(__DIR__ . '/../../public/assets/images/logo.png');
             $user->setPhotoPath('/assets/images/avatar.jpg');
             $user->setPhotoName('Avatar par défaut');
             $mail->to($user->getEmail());
