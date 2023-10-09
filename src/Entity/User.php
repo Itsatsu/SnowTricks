@@ -75,6 +75,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tricks::class)]
     private Collection $tricks;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photoPath = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $PhotoName = null;
+
     public function __construct()
     {
         $this->medias = new ArrayCollection();
@@ -254,6 +260,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $trick->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhotoPath(): ?string
+    {
+        return $this->photoPath;
+    }
+
+    public function setPhotoPath(?string $photoPath): static
+    {
+        $this->photoPath = $photoPath;
+
+        return $this;
+    }
+
+    public function getPhotoName(): ?string
+    {
+        return $this->PhotoName;
+    }
+
+    public function setPhotoName(?string $PhotoName): static
+    {
+        $this->PhotoName = $PhotoName;
 
         return $this;
     }
