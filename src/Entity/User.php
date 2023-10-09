@@ -6,11 +6,14 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints AS Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['username'], message: "Un compte existe déjà avec ce nom d'utilisateur.")]
+#[UniqueEntity(fields: ['email'], message: 'Un compte existe déjà avec cet email.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -19,11 +22,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\NotBlank(message: 'Veuillez renseigner un nom d\'utilisateur.')]
-    #[Assert\Unique(message: 'Ce nom d\'utilisateur est déjà utilisé.')]
+    #[Assert\NotBlank(message: "Veuillez renseigner un nom d'utilisateur.")]
     #[Assert\Length(min: 5, max: 180,
-        minMessage: 'Le nom d\'utilisateur doit contenir au moins {{ limit }} caractères.',
-        maxMessage: 'Le nom d\'utilisateur doit contenir au maximum {{ limit }} caractères.'
+        minMessage: "Le nom d'utilisateur doit contenir au moins {{ limit }} caractères.",
+        maxMessage: "Le nom d'utilisateur doit contenir au maximum {{ limit }} caractères."
     )]
 
     #assert le username de dois pas exitster
@@ -33,7 +35,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank(message: 'Veuillez renseigner votre email')]
     #[Assert\Email(message: 'Veuillez renseigner un email valide')]
-    #[Assert\Unique(message: 'Cet email est déjà utilisé')]
     private ?string $email = null;
 
     #[ORM\Column]

@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="fr" class="h-full h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SnowTriks | {% block title %}{% endblock %}</title>
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 1em;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+        .m-auto {
+            margin: auto
+        }
+
+        .mb-5 {
+            margin-bottom: 20px
+        }
+
+        .mt-10 {
+            margin-top: 40px
+        }
+
+        .mt-2 {
+            margin-top: 8px
+        }
+
+        .mt-5 {
+            margin-top: 20px
+        }
+
+        .block {
+            display: block
+        }
+
+        .inline-flex {
+            display: inline-flex
+        }
+
+        .table {
+            display: table
+        }
+
+        .h-full {
+            height: 100%
+        }
+
+        .w-96 {
+            width: 384px
+        }
+
+        .w-auto {
+            width: auto
+        }
+
+        .w-full {
+            width: 100%
+        }
+
+        .flex-col {
+            flex-direction: column
+        }
+
+        .items-center {
+            align-items: center
+        }
+
+        .rounded-md {
+            border-radius: 0.375rem
+        }
+
+        .border-2 {
+            border-width: 2px
+        }
+
+        .bg-neutral-200 {
+            background-color: #e5e5e5
+        }
+
+        .bg-neutral-600 {
+            background-color: #525252
+        }
+
+        .p-1 {
+            padding: 4px
+        }
+
+        .p-2 {
+            padding: 8px
+        }
+
+        .p-20 {
+            padding: 80px
+        }
+
+        .px-2 {
+            padding-left: 8px;
+            padding-right: 8px
+        }
+
+        .py-2 {
+            padding-top: 8px;
+            padding-bottom: 8px
+        }
+
+        .py-5 {
+            padding-top: 20px;
+            padding-bottom: 20px
+        }
+
+        .pb-2 {
+            padding-bottom: 8px
+        }
+
+        .text-center {
+            text-align: center
+        }
+
+        .text-2xl {
+            font-size: 24px
+        }
+
+        .text-xs {
+            font-size: 12px
+        }
+
+        .font-bold {
+            font-weight: 700
+        }
+
+        .font-medium {
+            font-weight: 500
+        }
+
+        .leading-none {
+            line-height: 1
+        }
+
+        .text-white {
+            color: #fff
+        }
+        .md\:m-auto {
+            margin: auto;
+        }
+        .w-72{
+            width: 288px;
+        }
+
+        @media (min-width: 768px) {
+            .md\:w-28 {
+                width: 112px
+            }
+
+
+            .md\:p-5 {
+                padding: 20px
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .lg\:w-56 {
+                width: 224px
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .xl\:w-96 {
+                width: 384px
+            }
+        }
+        .m-auto {
+            margin: auto
+        }
+
+        .mb-5 {
+            margin-bottom: 20px
+        }
+
+        .mt-10 {
+            margin-top: 40px
+        }
+
+        .mt-2 {
+            margin-top: 8px
+        }
+
+        .block {
+            display: block
+        }
+
+        .inline-flex {
+            display: inline-flex
+        }
+
+        .w-96 {
+            width: 384px
+        }
+
+        .w-full {
+            width: 100%
+        }
+
+        .flex-col {
+            flex-direction: column
+        }
+
+        .items-center {
+            align-items: center
+        }
+
+        .rounded-md {
+            border-radius: 0.375rem
+        }
+
+        .border-2 {
+            border-width: 2px
+        }
+        .text-primary2 {
+            color: #F27C0F
+        }
+        .border-primary2 {
+            border-color: #F27C0F
+        }
+        .bg-accent {
+            background-color: #0679E5
+        }
+
+        .body{
+            margin: 0;
+        }
+        .bg-neutral-200 {
+            background-color: #e5e5e5
+        }
+        .bg-primary2{
+            background-color: #F27C0F
+        }
+        .rounded-md{
+            border-radius: 0.375rem
+        }
+
+        .bg-background2{
+            background-color: #E6F3FE
+        }
+
+        .p-1 {
+            padding: 4px
+        }
+
+        .px-2 {
+            padding-left: 8px;
+            padding-right: 8px
+        }
+
+        .py-2 {
+            padding-top: 8px;
+            padding-bottom: 8px
+        }
+
+        .pb-2 {
+            padding-bottom: 8px
+        }
+
+        .text-center {
+            text-align: center
+        }
+
+        .text-2xl {
+            font-size: 24px
+        }
+
+        .text-xs {
+            font-size: 12px
+        }
+
+        .font-bold {
+            font-weight: 700
+        }
+
+        .font-medium {
+            font-weight: 500
+        }
+
+        .leading-none {
+            line-height: 1
+        }
+
+        .text-white {
+            color: #fff
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .dark\:bg-neutral-600 {
+                background-color: #525252
+            }
+        }
+
+        @media (min-width: 768px) {
+            .md\:m-auto {
+                margin: auto
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .lg\:p-2 {
+                padding: 8px
+            }
+        }
+    </style>
+
+</head>
+<body class="bg-background w-full h-full">
+<table class="w-full  h-full">
+    <tbody class="w-full  h-full " style="margin: 0; padding: 0;">
+    <tr class="p-20">
+        <td class=" w-auto md:w-28 lg:w-56 xl:w-96"></td>
+        <td class="text-center w-auto bg-background2 md:p-5 ">
+            <h1 class="text-primary2 font-bold text-2xl py-5">SnowTricks</h1>
+            <div class="text-center d:px-m5 " >
+                {% block body %}{% endblock %}
+
+                <div class="mt-5">
+                    <p>Si tu n'as pas créé de compte sur SnowTricks, tu peux ignorer ce mail.</p>
+                    <p>Si tu as des questions, n'hésite pas à nous contacter </p>
+                </div>
+            </div>
+        </td>
+        <td class=" w-auto md:w-28 lg:w-56 xl:w-96 ">
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
