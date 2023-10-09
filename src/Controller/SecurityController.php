@@ -18,9 +18,10 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // redirect already logged in users to user page
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        //}
+         if ($this->getUser()) {
+             $this->addFlash('error', 'Vous êtes déjà connecté');
+             return $this->redirectToRoute('app_default');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -49,8 +50,8 @@ class SecurityController extends AbstractController
             $user->setToken(uniqid());
             $entityManager->persist($user);
             $entityManager->flush();
+            $this->addFlash('success', 'Votre compte a bien été créé. Un email vous a été envoyé pour activer votre compte.');
             return $this->redirectToRoute('app_login', [
-                'message' => 'Votre compte a bien été créé. Vérifier votre email pour vous connecter.'
             ], Response::HTTP_SEE_OTHER);
         }
 
