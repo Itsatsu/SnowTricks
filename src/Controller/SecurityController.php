@@ -50,6 +50,7 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $token = random_bytes(24);
+            $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
             $user->setToken(bin2hex($token));
             $user->setRoles(['ROLE_USER']);
             $filePath = realpath(__DIR__ . '/../../public/assets/images/logo.png');
@@ -62,7 +63,7 @@ class SecurityController extends AbstractController
             ]);
 
             if(!$mail->send()){
-                $this->addFlash('error', "Une erreur est survenue lors de l'envoi de l'email.Réessayer plus tard");
+                $this->addFlash('error', "Une erreur est survenue lors de l'envoi de l'email. Réessayez plus tard");
                 return $this->redirectToRoute('app_user_new', [
                 ], Response::HTTP_SEE_OTHER);
             }
