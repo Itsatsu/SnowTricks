@@ -1,0 +1,6 @@
+security:
+  login:
+    blocked: "Connexion bloquée en raison de plusieurs tentatives infructueuses."
+    incorrect_password: "Mot de passe incorrect."
+    username_not_found: "Nom d'utilisateur introuvable."
+  access_denied: "Accès refusé. Vous n'avez pas la permission requise."
