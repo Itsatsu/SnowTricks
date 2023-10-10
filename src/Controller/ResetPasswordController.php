@@ -66,7 +66,7 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
-        return $this->render('reset_password/check_email.html.twig', [
+        return $this->render('reset_password/request.html.twig', [
             'resetToken' => $resetToken,
         ]);
     }
@@ -133,7 +133,8 @@ class ResetPasswordController extends AbstractController
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
-            return $this->redirectToRoute('app_check_email');
+            $this->addFlash('success','Si un compte est associé à cette adresse email, un email vous a été envoyé pour réinitialiser votre mot de passe.');
+            return $this->redirectToRoute('app_login');
         }
 
         try {
@@ -148,8 +149,8 @@ class ResetPasswordController extends AbstractController
             //     $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
             //     $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
             // ));
-
-            return $this->redirectToRoute('app_check_email');
+            $this->addFlash('success','Si un compte est associé à cette adresse email, un email vous a été envoyé pour réinitialiser votre mot de passe.');
+            return $this->redirectToRoute('app_mot_de_passe_oublier');
         }
 
             $mail->to($user->getEmail())
@@ -163,7 +164,7 @@ class ResetPasswordController extends AbstractController
 
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
-
-        return $this->redirectToRoute('app_check_email');
+        $this->addFlash('success','Si un compte est associé à cette adresse email, un email vous a été envoyé pour réinitialiser votre mot de passe.');
+        return $this->redirectToRoute('app_mot_de_passe_oublier');
     }
 }
