@@ -1,0 +1,11 @@
+{{ form_start(resetForm) }}
+<div class="space-y-6">
+    <div>
+
+        <div class="mt-2">
+            {{ form_widget(resetForm.plainPassword) }}
+            <div class="text-danger">{{ form_errors(resetForm.plainPassword) }} </div>
+        </div>
+    </div>
+        <button class="flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 lg:hover:-translate-y-1.5">{{ button_label|default("Réinitialiser") }}</button>
+{{ form_end(resetForm) }}

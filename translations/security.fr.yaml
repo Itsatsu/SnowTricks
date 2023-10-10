@@ -4,3 +4,6 @@ security:
     incorrect_password: "Mot de passe incorrect."
     username_not_found: "Nom d'utilisateur introuvable."
   access_denied: "Accès refusé. Vous n'avez pas la permission requise."
+
+resetToken:
+  expirationMessageKey: "Votre lien de réinitialisation de mot de passe a expiré."
