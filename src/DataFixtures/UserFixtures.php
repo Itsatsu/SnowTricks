@@ -12,7 +12,7 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 11; $i++) {
             $user = new User();
             $user->setEmail('user' . $i . '@test.fr');
             $user->setPassword(password_hash('pass', PASSWORD_DEFAULT));
