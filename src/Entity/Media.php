@@ -79,7 +79,7 @@ class Media
         return $this;
     }
 
-    public function isIsMain(): ?bool
+    public function isMain(): ?bool
     {
         return $this->isMain;
     }
@@ -91,7 +91,7 @@ class Media
         return $this;
     }
 
-    public function isIsVideo(): ?bool
+    public function isVideo(): ?bool
     {
         return $this->isVideo;
     }
