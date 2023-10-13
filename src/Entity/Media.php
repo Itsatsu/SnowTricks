@@ -24,9 +24,6 @@ class Media
     private ?string $storage = null;
 
     #[ORM\Column]
-    private ?bool $isMain = null;
-
-    #[ORM\Column]
     #[Assert\NotBlank(message: 'Veuillez renseigner si le média est une image ou une vidéo.')]
     private ?bool $isVideo = null;
 
@@ -75,18 +72,6 @@ class Media
     public function setStorage(string $storage): static
     {
         $this->storage = $storage;
-
-        return $this;
-    }
-
-    public function isMain(): ?bool
-    {
-        return $this->isMain;
-    }
-
-    public function setIsMain(bool $isMain): static
-    {
-        $this->isMain = $isMain;
 
         return $this;
     }

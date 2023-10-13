@@ -51,6 +51,9 @@ class Tricks
     #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\Column(length: 255)]
+    private ?string $pictureStorage = null;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
@@ -190,6 +193,18 @@ class Tricks
                 $comment->setTricks(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPictureStorage(): ?string
+    {
+        return $this->pictureStorage;
+    }
+
+    public function setPictureStorage(string $pictureStorage): static
+    {
+        $this->pictureStorage = $pictureStorage;
 
         return $this;
     }
