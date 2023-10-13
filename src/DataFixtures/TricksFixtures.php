@@ -57,7 +57,7 @@ class TricksFixtures extends Fixture implements DependentFixtureInterface
             $objTrick->setName($trick['name']);
 
             $objTrick->setDescription($trick['description']);
-
+            $objTrick->setPictureStorage('/assets/images/'.$i.'.jpg');
             $objTrick->setCategorie($this->getReference($trick['group']));
 
             //manque image et video

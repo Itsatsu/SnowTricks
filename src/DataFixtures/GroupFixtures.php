@@ -34,7 +34,6 @@ class GroupFixtures extends Fixture implements DependentFixtureInterface
             $group->setUser($this->getReference('user' . $key));
             $manager->persist($group);
             $this->addReference($value, $group);
-            var_dump($value);
         }
 
         $manager->flush();
