@@ -19,13 +19,18 @@ class Tricks
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Veuillez renseigner un nom de figure.')]
+    #[Assert\Length(min: 3,
+        max: 255,
+        minMessage: 'Le nom de la figure doit contenir au minimum {{ limit }} caractères.',
+        maxMessage: 'Le nom de la figure doit contenir au maximum {{ limit }} caractères.'
+    )]
     private ?string $name = null;
 
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'Veuillez renseigner une description.')]
-    #[Assert\Length(max: 255,
-        maxMessage: 'Le nom de la catégorie doit contenir au maximum {{ limit }} caractères.'
+    #[Assert\Length(min: 10,
+        maxMessage: 'la description du tricks doit contenir au minimum {{ limit }} caractères.'
     )]
     private ?string $description = null;
 
@@ -42,7 +47,6 @@ class Tricks
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'Veuillez renseigner une catégorie.')]
-
     private ?Group $categorie = null;
 
     #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Media::class)]
