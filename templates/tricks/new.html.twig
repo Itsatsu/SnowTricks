@@ -3,9 +3,69 @@
 {% block title %}New Tricks{% endblock %}
 
 {% block body %}
-    <h1>Create new Tricks</h1>
+    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+            <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Création d'un nouveau tricks</h2>
+        </div>
 
-    {{ include('tricks/_form.html.twig') }}
-
-    <a href="{{ path('app_tricks_index') }}">back to list</a>
+        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            {{ include('tricks/_form.html.twig') }}
+            <div class="text-sm flex flex-col items-center mt-4">
+                <a href="{{ path('app_default') }}" class="font-semibold text-indigo-600 hover:text-indigo-500"> Retour a l'accueil</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+{% block javascripts %}
+    <script>
+        let collection, boutonAjout, span;
+        window.onload = () => {
+            collection = document.querySelector("#media");
+            span = collection.querySelector("span");
+
+            boutonAjout = document.createElement("button");
+            boutonAjout.className = "ajout-media bg-accent text-white px-4 py-2 rounded-md";
+            boutonAjout.innerText = "Ajouter un media";
+
+            let nouveauBouton = span.append(boutonAjout);
+
+            collection.dataset.index = collection.querySelectorAll("input").length;
+
+            boutonAjout.addEventListener("click", function(event){
+                event.preventDefault();
+                addButton(collection, nouveauBouton);
+            });
+        }
+
+        function addButton(collection, nouveauBouton){
+            let prototype = collection.dataset.prototype;
+
+            let index = collection.dataset.index;
+
+            prototype = prototype.replace(/__name__/g, index);
+
+            let content = document.createElement("html");
+            content.innerHTML = prototype;
+            let newForm = content.querySelector("div");
+
+            let boutonSuppr = document.createElement("button");
+            boutonSuppr.type = "button";
+            boutonSuppr.className = "bg-danger text-white px-4 py-2 rounded-md";
+            boutonSuppr.id = "delete-media-" + index;
+            boutonSuppr.innerText = "Supprimer ce media";
+
+            newForm.append(boutonSuppr);
+
+            collection.dataset.index++;
+
+            let boutonAjout = collection.querySelector(".ajout-media");
+
+            span.insertBefore(newForm, boutonAjout);
+
+            boutonSuppr.addEventListener("click", function(){
+                this.previousElementSibling.parentElement.remove();
+            })
+        }
+
+    </script>
+{% endblock javascripts %}

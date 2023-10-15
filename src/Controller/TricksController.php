@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Tricks;
+use App\Form\MediaType;
 use App\Form\TricksType;
 use App\Repository\TricksRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,14 +23,16 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_tricks_new', methods: ['GET', 'POST'])]
+    #[Route('/ajouter', name: 'app_tricks_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $trick = new Tricks();
         $form = $this->createForm(TricksType::class, $trick);
+        $formMedia = $this->createForm(MediaType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setCreatedAt(new \DateTimeImmutable());
             $entityManager->persist($trick);
             $entityManager->flush();
 
@@ -39,14 +42,17 @@ class TricksController extends AbstractController
         return $this->render('tricks/new.html.twig', [
             'trick' => $trick,
             'form' => $form,
+            'formMedia' => $formMedia,
         ]);
     }
 
     #[Route('/{id}', name: 'app_tricks_show', methods: ['GET'])]
     public function show(Tricks $trick): Response
     {
+        $medias = $trick->getMedia();
         return $this->render('tricks/show.html.twig', [
             'trick' => $trick,
+            'medias' => $medias,
         ]);
     }
 
@@ -54,9 +60,11 @@ class TricksController extends AbstractController
     public function edit(Request $request, Tricks $trick, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(TricksType::class, $trick);
+        $formMedia = $this->createForm(MediaType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->flush();
 
             return $this->redirectToRoute('app_tricks_index', [], Response::HTTP_SEE_OTHER);
@@ -65,6 +73,7 @@ class TricksController extends AbstractController
         return $this->render('tricks/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,
+            'formMedia' => $formMedia,
         ]);
     }
 
