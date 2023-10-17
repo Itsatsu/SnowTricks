@@ -23,7 +23,7 @@
             {{ form_label(form.description, "Description",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
         </div>
         <div class="mt-2">
-            {{ form_widget(form.description,  { 'attr': {'class': ' block  w-full rounded-md border-0  px-3 py-[0.32rem]  outline-none  focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100  dark:text-neutral-200  [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0'} }) }}
+            {{ form_widget(form.description,  { 'attr': {'class': ' block  w-full rounded-md border-0  px-3 py-[0.32rem]  outline-none '} }) }}
             <div class="text-danger">{{ form_errors(form.description) }}</div>
         </div>
     </div>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div id="media" data-prototype="{{ form_row(form.media.vars.prototype)|e("html_attr")}}" class="text-center">
-        {{ form_row(form.media) }}
+    {{ form_row(form.media) }}
         <span></span>
     </div>
 
