@@ -32,9 +32,49 @@ class TricksController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setUser($this->getUser());
             $trick->setCreatedAt(new \DateTimeImmutable());
-            $entityManager->persist($trick);
-            $entityManager->flush();
+            $cheminDossier = '/assets/images/triks/'.$trick->getName();
+
+            //création du dossier
+            if (!is_dir('../public'.$cheminDossier)) {
+                mkdir('../public'.$cheminDossier,0777);
+                mkdir('../public'.$cheminDossier . '/media');
+            }
+            $filePicture = $form->get('pictureStorage')->getData();
+            //ajout de l'image principale si elle existe sinon ajout d'une image par défaut
+            if ($filePicture) {
+                $filePicture->move('../public'.$cheminDossier, '/cover.jpg');
+            }else{
+                copy('../public/assets/images/cover.jpg', '../public'.$cheminDossier.'/cover.jpg');
+            }
+            $trick->setPictureStorage($cheminDossier.'/cover.jpg');
+            if($trick->getMedia()){
+                $i =0;
+               foreach ($trick->getMedia() as $media) {
+
+                   $media->setTricks($trick);
+                   $media->setCreatedAt(new \DateTimeImmutable());
+                   $media->setUser($this->getUser());
+
+                   if ($media->IsVideo()){
+                       $iframe = $media->getVideo();
+                       $regex = '/https[^"]+/';
+                       preg_match($regex,$iframe,$matches);
+                        $media->setVideo($matches[0]);
+                       $media->setPicture(null);
+                   } else {
+                       $file = $request->files->get('tricks')['media'][$i]['picture'];
+                       $media->setPicture($cheminDossier.'/media/'.$media->getName().'.'.$file->guessExtension());
+                       $file->move('../public'.$cheminDossier.'/media/', $media->getName().'.'.$file->guessExtension());
+                       $media->setIsVideo(false);
+                   }
+                   $i++;
+                   $entityManager->persist($media);
+               }
+            }
+           $entityManager->persist($trick);
+           $entityManager->flush();
 
             return $this->redirectToRoute('app_tricks_index', [], Response::HTTP_SEE_OTHER);
         }
