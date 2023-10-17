@@ -47,24 +47,52 @@
             let content = document.createElement("html");
             content.innerHTML = prototype;
             let newForm = content.querySelector("div");
-
+            newForm.className = "m-5 border border-accent rounded-md px-5";
+            let checkbox = newForm.querySelector("#tricks_media_"+ index +"_isVideo");
             let boutonSuppr = document.createElement("button");
+            let title = document.createElement("h4");
+            title.className = "text-xl font-bold";
+            title.innerText = "Media ";
+            newForm.prepend(title);
             boutonSuppr.type = "button";
-            boutonSuppr.className = "bg-danger text-white px-4 py-2 rounded-md";
+            boutonSuppr.className = "bg-danger text-white px-4 py-2 rounded-md mt-2 mb-5";
             boutonSuppr.id = "delete-media-" + index;
             boutonSuppr.innerText = "Supprimer ce media";
 
             newForm.append(boutonSuppr);
-
             collection.dataset.index++;
 
             let boutonAjout = collection.querySelector(".ajout-media");
 
             span.insertBefore(newForm, boutonAjout);
-
+            let inputImage = document.querySelector("#tricks_media_"+ index +"_picture");
+            let inputVideo = document.querySelector("#tricks_media_"+ index +"_video");
+            inputVideo.parentElement.classList.add("hidden");
+            inputImage.required = true;
             boutonSuppr.addEventListener("click", function(){
                 this.previousElementSibling.parentElement.remove();
+                collection.dataset.index--;
             })
+
+            checkbox.addEventListener("change", function(){
+                if(this.checked){
+                    inputVideo.parentElement.classList.remove("hidden");
+                    inputVideo.required = true;
+
+                    inputImage.parentElement.classList.add("hidden");
+                    inputImage.value = null;
+                    inputImage.required = false;
+
+                }else{
+                    inputVideo.parentElement.classList.add("hidden");
+                    inputVideo.value = null;
+                    inputVideo.required = false;
+
+                    inputImage.parentElement.classList.remove("hidden");
+                    inputImage.required = true;
+                }
+            })
+
         }
 
     </script>
