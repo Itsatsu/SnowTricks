@@ -58,10 +58,13 @@ class TricksType extends AbstractType
                 'class' => Group::class,
                 'choice_label' => 'name',
                 'multiple' => false,
+                'required' => true,
             ])
             ->add('media', CollectionType::class, [
                 'entry_type' => MediaType::class,
-                'entry_options' => ['label' => false],
+                'label' => 'Les médias secondaire du tricks',
+                'entry_options' => ['label' => false, 'required' => false],
+
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
