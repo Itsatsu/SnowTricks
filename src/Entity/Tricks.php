@@ -51,10 +51,10 @@ class Tricks
     #[Assert\NotNull(message: 'Veuillez renseigner une catégorie.')]
     private ?Group $categorie = null;
 
-    #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Media::class)]
+    #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Media::class,cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $media;
 
-    #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Comment::class,cascade: ['remove'] , orphanRemoval: true)]
     private Collection $comments;
 
     #[ORM\Column(length: 255)]
