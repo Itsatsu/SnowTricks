@@ -7,76 +7,58 @@
         <section class="mx-2 lg:mt-10 mt-2 ">
             <div class="mx-auto max-w-7xl  bg-info-50">
                 <div class=" w-full overflow-hidden rounded-2xl">
-                    <img src="{{ asset('images/tricks 1.jpg') }}" alt="404"
+                    <img src="{{ trick.pictureStorage }}" alt="Un tricks"
                          class=" h-[50vw] lg:h-[34vw] w-full object-cover object-left-top ">
+                    <div
+                            class="absolute  left-0 right-0 top-14  overflow-hidden bg-fixed">
+                        <div class="flex h-[40vw] lg:h-[34vw] items-center justify-center   ">
+                            <div class=" text-center text-white backdrop-blur-sm border-0 rounded-2xl md:p-4 md:pb-5">
+                                <h1 class=" text-2xl md:text-4xl xl:text-7xl lg:text-6xl font-bold text-primary2">{{ trick.name }}</h1>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex justify-center  mt-2 flex-col px-8">
+
+                <div class="flex justify-center  mt-2 flex-col px-8 text-center">
+                    {% if trick.media|length > 0 %}
                     {# photo/video #}
                     <div class="inline-flex flex-col  lg:hidden justify-center font-medium px-2 bg-primary2 rounded-md lg:hover:-translate-y-1.5  lg:m-2 lg:p-2 lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 ">
                         <a href="#" type="button" class="inline-flex w-full flex-col items-center group">
                             <span class="text-1xl">Voir les photos et videos</span>
                         </a>
                     </div>
-                    <div class=" mx-5 hidden lg:grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-5 gap-x-10 gap-y-5 ">
+                        <div class=" mx-5 hidden lg:grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-5 gap-x-10 gap-y-5 ">
+                    {% for media in medias %}
+
+
+                        {% if media.isVideo %}
                         <div class=" relative">
                             <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-36 ">
-                                <img src="{{ asset('images/tricks 1.jpg') }}" alt="un tricks"
+                                <iframe class="w-full h-full object-cover object-center lg:h-full lg:w-full" allow="fullscreen" src="{{ media.video }}">
+                                </iframe>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class=" relative">
+                            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-36 ">
+                                <img src="{{ media.picture }}" alt="{{ media.name }}"
                                      class="h-full w-full object-cover object-center lg:h-full lg:w-full">
                             </div>
                         </div>
-                        <div class=" relative">
-                            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-36 ">
-                                <img src="{{ asset('images/tricks 1.jpg') }}" alt="un tricks"
-                                     class="h-full w-full object-cover object-center lg:h-full lg:w-full">
-                            </div>
-                        </div>
-                        <div class=" relative">
-                            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-36 ">
-                                <img src="{{ asset('images/tricks 1.jpg') }}" alt="un tricks"
-                                     class="h-full w-full object-cover object-center lg:h-full lg:w-full">
-                            </div>
-                        </div>
-                        <div class=" relative">
-                            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-36 ">
-                                <img src="{{ asset('images/tricks 1.jpg') }}" alt="un tricks"
-                                     class="h-full w-full object-cover object-center lg:h-full lg:w-full">
-                            </div>
-                        </div>
-                        <div class=" relative">
-                            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-36 ">
-                                <img src="{{ asset('images/tricks 1.jpg') }}" alt="un tricks"
-                                     class="h-full w-full object-cover object-center lg:h-full lg:w-full">
-                            </div>
-                        </div>
+                        {% endif %}
+
+                        {% endfor %}
+                    </div>
+                        {% else %}
+                            <p>Il n'y a pas encore de photo ou video supplémentaire</p>
+                            {% if app.user %}
+                                <a href="#">Ajouter des medias</a>
+                                {% endif %}
+                        {% endif %}
                     </div>
                     {# text #}
-                    <div class="py-5">
-                        <p>Lorem ipsoum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium architecto
-                            asperiores atque autem, beatae consequatur cumque cupiditate deserunt dolorum eligendi error
-                            est eum
-                            eveniet exercitationem fugiat fugit harum illo impedit in incidunt ipsa ipsum laboriosam
-                            laborum
-                            laudantium magnam maiores maxime minima molestiae mollitia natus nemo neque obcaecati
-                            officia
-                            officiis omnis optio pariatur perferendis perspiciatis placeat porro possimus praesentium
-                            provident
-                            quae quas quia quibusdam quisquam quo ratione recusandae rem repellat repellendus
-                            reprehenderit
-                            repudiandae rerum saepe sapiente sequi similique sint sit soluta sunt suscipit tempora
-                            temporibus
-                            tenetur totam ullam unde ut vel veniam voluptas voluptate voluptatem voluptates voluptatibus
-                            voluptatum. Aperiam asperiores atque autem, beatae consequatur cumque cupiditate deserunt
-                            dolorum
-                            eligendi error est eum eveniet exercitationem fugiat fugit harum illo impedit in incidunt
-                            ipsa
-                            ipsum laboriosam laborum laudantium magnam maiores maxime minima molestiae mollitia natus
-                            nemo
-                            neque obcaecati officia officiis omnis optio pariatur perferendis perspiciatis placeat porro
-                            possimus praesentium provident quae quas quia quibusdam quisquam quo ratione
-                            recusandae rem repellat repellendus reprehenderit repudiandae rerum saepe sapiente sequi
-                            similique sint sit
-                            soluta sunt suscipit tempora temporibus tenetur totam ullam unde ut vel veniam voluptas
-                            voluptate voluptatem voluptates voluptatibus voluptatum.</p>
+                    <div class="p-5 ">
+                        <p>{{ trick.description }}</p>
 
                     </div>
                     {# catégorie #}
@@ -84,33 +66,32 @@
                         <div data-te-chip-init data-te-ripple-init
                              class="[word-wrap: break-word] my-[5px] mr-4 flex h-[32px] cursor-pointer items-center justify-between rounded-[16px] border border-primary2 bg-[#eceff1] bg-[transparent] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:border-[#3b71ca] hover:!shadow-none dark:text-neutral-200"
                              data-te-ripple-color="dark"
-                        >Ajouté le: 11/10/2022
+                        >Ajouté le: {{ trick.createdAt|date('d/m/Y') }}
                         </div>
                         <div data-te-chip-init data-te-ripple-init
                              class="[word-wrap: break-word] my-[5px] mr-4 flex h-[32px] cursor-pointer items-center justify-between rounded-[16px] border border-primary2 bg-[#eceff1] bg-[transparent] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:border-[#3b71ca] hover:!shadow-none dark:text-neutral-200"
                              data-te-ripple-color="dark"
-                        >par : Hugogo
+                        >par : {{ trick.user.username }}
                         </div>
+                        {% if trick.updatedAt %}
                         <div data-te-chip-init data-te-ripple-init
                              class="[word-wrap: break-word] my-[5px] mr-4 flex h-[32px] cursor-pointer items-center justify-between rounded-[16px] border border-primary2 bg-[#eceff1] bg-[transparent] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:border-[#3b71ca] hover:!shadow-none dark:text-neutral-200"
                              data-te-ripple-color="dark"
-                        >Modifier le: 25/10/2022
+                        >Modifier le: {{ trick.updatedAt|date('d/m/Y') }}
                         </div>
+                        {% endif %}
                         <div data-te-chip-init data-te-ripple-init
                              class="[word-wrap: break-word] my-[5px] mr-4 flex h-[32px] cursor-pointer items-center justify-between rounded-[16px] border border-accent bg-[#eceff1] bg-[transparent] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:border-[#3b71ca] hover:!shadow-none dark:text-neutral-200"
                              data-te-ripple-color="dark"
-                        > Snow
-                        </div>
-                        <div data-te-chip-init data-te-ripple-init
-                             class="[word-wrap: break-word] my-[5px] mr-4 flex h-[32px] cursor-pointer items-center justify-between rounded-[16px] border border-accent bg-[#eceff1] bg-[transparent] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:border-[#3b71ca] hover:!shadow-none dark:text-neutral-200"
-                             data-te-ripple-color="dark"
-                        > 360°
+                        > {{ trick.categorie.name }}
                         </div>
 
                     </div>
+
                     <hr>
                     {# form commentaire #}
                     <div class="flex lg:flex-row flex-col justify-center items-center py-5">
+                        {% if app.user %}
                         <div class="md:w-96">
                             <textarea id="comment" name="comment" autocomplete="username"
                                       placeholder="Votre commentaire ici" rows="4" required
@@ -121,74 +102,44 @@
                                 <span class="text-1xl">Envoyer</span>
                             </a>
                         </div>
+                        {% else %}
+                            <p>Vous devez etre connecté pour commenter !</p>
+                        {% endif %}
                     </div>
+
+
+
+
                     <hr>
                     {# commentaire #}
                     <div class="flex-col flex py-5 justify-center">
-                        <div class="flex flex-col md:flex-row justify-center rounded-xl m-2 p-2 bg-background2">
-                            <div class="flex md:flex-col flex-row justify-between md:justify-center">
+                        {% if trick.comments|length > 0 %}
+                        {% for comment in trick.comments %}
+
+                        <div class="flex flex-col md:flex-row justify-start rounded-xl m-2 p-2 bg-background2">
+                            <div class="flex md:flex-col flex-row justify-between md:justify-center text-center items-center">
                                 <img
-                                        src="https://tecdn.b-cdn.net/img/new/avatars/1.webp"
-                                        class="md:w-32 w-10 rounded-lg shadow-lg columns-3"
+                                        src="{{ comment.user.photoPath }}"
+                                        class="md:w-24 w-10 rounded-lg shadow-lg columns-3"
                                         alt="Avatar"/>
+                                <div>{{ comment.user.username }}</div>
                                 <div data-te-chip-init data-te-ripple-init
-                                     class="[word-wrap: break-word] my-[5px] flex h-[32px] items-center justify-between rounded-lg border border-primary2 bg-[#eceff1] bg-[transparent] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] ease-linear dark:text-neutral-200"
+                                     class="[word-wrap: break-word] my-[5px] flex h-[32px] items-center justify-around rounded-lg border border-primary2 bg-[#eceff1] bg-[transparent] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] ease-linear dark:text-neutral-200"
                                      data-te-ripple-color="dark"
-                                >11/10/2022
-                                </div>
+                                >{{ comment.createdAt|date('d/m/Y') }}</div>
+
                             </div>
                             <div class=" px-5 py-2 ml-4 mt-2 md:mt-0 items-center flex ">
                                 <p >
-                                    lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium lorem ipsum dolor sit amet,
-                                    consectetur adipisicing elit. Accusamus accusantium lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                    Accusamus accusantium
+                                    {{ comment.content }}
                                 </p>
                             </div>
 
                         </div>
-                        <div class="flex flex-col md:flex-row justify-center rounded-xl m-2 p-2 bg-background2">
-                            <div class="flex md:flex-col flex-row justify-between md:justify-center">
-                                <img
-                                        src="https://tecdn.b-cdn.net/img/new/avatars/1.webp"
-                                        class="md:w-32 w-10 rounded-lg shadow-lg columns-3"
-                                        alt="Avatar"/>
-                                <div data-te-chip-init data-te-ripple-init
-                                     class="[word-wrap: break-word] my-[5px] flex h-[32px] items-center justify-between rounded-lg border border-primary2 bg-[#eceff1] bg-[transparent] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] ease-linear dark:text-neutral-200"
-                                     data-te-ripple-color="dark"
-                                >11/10/2022
-                                </div>
-                            </div>
-                            <div class=" px-5 py-2 ml-4 mt-2 md:mt-0 items-center flex ">
-                                <p >
-                                    lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium lorem ipsum dolor sit amet,
-                                    consectetur adipisicing elit. Accusamus accusantium lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                    Accusamus accusantium
-                                </p>
-                            </div>
-
-                        </div>
-                        <div class="flex flex-col md:flex-row justify-center rounded-xl m-2 p-2 bg-background2">
-                            <div class="flex md:flex-col flex-row justify-between md:justify-center">
-                                <img
-                                        src="https://tecdn.b-cdn.net/img/new/avatars/1.webp"
-                                        class="md:w-32 w-10 rounded-lg shadow-lg columns-3"
-                                        alt="Avatar"/>
-                                <div data-te-chip-init data-te-ripple-init
-                                     class="[word-wrap: break-word] my-[5px] flex h-[32px] items-center justify-between rounded-lg border border-primary2 bg-[#eceff1] bg-[transparent] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] ease-linear dark:text-neutral-200"
-                                     data-te-ripple-color="dark"
-                                >11/10/2022
-                                </div>
-                            </div>
-                            <div class=" px-5 py-2 ml-4 mt-2 md:mt-0 items-center flex ">
-                                <p >
-                                    lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium lorem ipsum dolor sit amet,
-                                    consectetur adipisicing elit. Accusamus accusantium lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                    Accusamus accusantium
-                                </p>
-                            </div>
-
-                        </div>
-
+                        {% endfor %}
+                        {% else %}
+                            <p>Il n'y a pas encore de commentaire</p>
+                        {% endif %}
 
                     </div>
 
