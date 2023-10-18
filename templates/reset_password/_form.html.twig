@@ -2,11 +2,11 @@
 <div class="space-y-6">
     <div>
         <div class="flex items-center justify-center">
-            {{ form_label(form.email, "Email",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+            {{ form_label(form.username, "Username",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
         </div>
         <div class="mt-2">
-            {{ form_widget(form.email,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
-            <div class="text-danger">{{ form_errors(form.email) }} </div>
+            {{ form_widget(form.username,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+            <div class="text-danger">{{ form_errors(form.username) }} </div>
         </div>
     </div>
         <button class="flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 lg:hover:-translate-y-1.5">{{ button_label|default("Réinitialiser") }}</button>

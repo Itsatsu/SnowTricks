@@ -37,12 +37,13 @@ class ResetPasswordController extends AbstractController
     #[Route('', name: 'app_mot_de_passe_oublier')]
     public function request(Request $request, TranslatorInterface $translator, MailService $mail): Response
     {
+
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->processSendingPasswordResetEmail(
-                $form->get('email')->getData(),
+                $form->get('username')->getData(),
                 $mail,
                 $translator
 
@@ -125,15 +126,15 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    private function processSendingPasswordResetEmail(string $emailFormData,MailService $mail,  TranslatorInterface $translator): RedirectResponse
+    private function processSendingPasswordResetEmail(string $username,MailService $mail,  TranslatorInterface $translator): RedirectResponse
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
-            'email' => $emailFormData,
+            'username' => $username,
         ]);
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
-            $this->addFlash('success','Si un compte est associé à cette adresse email, un email vous a été envoyé pour réinitialiser votre mot de passe.');
+            $this->addFlash('success','Si un compte est associé à ce username, un email vous a été envoyé pour réinitialiser votre mot de passe.');
             return $this->redirectToRoute('app_login');
         }
 
