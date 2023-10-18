@@ -117,14 +117,17 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_tricks_delete', methods: ['POST'])]
+    #[Route('/supprimer/{name}', name: 'app_tricks_delete', methods: ['POST'])]
     public function delete(Request $request, Tricks $trick, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
+            $fileSysteme = new Filesystem();
+            $fileSysteme->remove('../public/assets/images/triks/'.$trick->getName());
             $entityManager->remove($trick);
+
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_tricks_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_default', [], Response::HTTP_SEE_OTHER);
     }
 }
