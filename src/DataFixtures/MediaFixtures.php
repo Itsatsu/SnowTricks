@@ -26,9 +26,9 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 13; $i > -1; $i--) {
             $media = new Media();
             $media->setName($i.'.jpg');
-            $trickId = $this->getReference('tricks' . $i)->getId();
-            $media->setPicture('/assets/images/triks/'.$trickId.'/media/'.$media->getName());
-            copy('public/assets/images/tricks 1.jpg', 'public/assets/images/triks/'.$trickId.'/media/'.$media->getName());
+            $trickName = $this->getReference('tricks' . $i)->getName();
+            $media->setPicture('/assets/images/triks/'.$trickName.'/media/'.$media->getName());
+            copy('public/assets/images/tricks 1.jpg', 'public/assets/images/triks/'.$trickName.'/media/'.$media->getName());
             $media->setTricks($this->getReference('tricks' . $i));
             $media->setUser($this->getReference('user' . $i));
             $media->setCreatedAt(new \DateTimeImmutable());

@@ -72,20 +72,20 @@ class TricksFixtures extends Fixture implements DependentFixtureInterface
         }
         $manager->flush();
         for ($i = 0; $i < 15; $i++) {
-            $trick = $this->getReference('tricks' . $i)->getId();
+            $trick = $this->getReference('tricks' . $i);
             if ($i % 2 == 0)
             {
                 $objTrick->setUpdatedAt(new \DateTimeImmutable('2023-10-14'));
             }
-            $cheminDossier = 'public/assets/images/triks/'.$trick;
+            $cheminDossier = 'public/assets/images/triks/'.$trick->getName();
             if (!is_dir($cheminDossier))
             {
                 mkdir($cheminDossier);
                 mkdir($cheminDossier.'/media');
                 copy('public/assets/images/cover.jpg', $cheminDossier.'/cover.jpg');
                 $tricksRepository = $manager->getRepository(Tricks::class);
-                $objTrick = $tricksRepository->find($trick);
-                $objTrick->setPictureStorage('/assets/images/triks/'.$trick.'/cover.jpg');
+                $objTrick = $tricksRepository->find($trick->getId());
+                $objTrick->setPictureStorage('/assets/images/triks/'.$trick->getName().'/cover.jpg');
                 $manager->persist($objTrick);
                 $manager->flush();
             }
