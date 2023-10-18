@@ -6,6 +6,7 @@ use App\Entity\Media;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+
 ;
 
 class MediaFixtures extends Fixture implements DependentFixtureInterface
@@ -20,25 +21,17 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 10; $i++) {
+
+
+        for ($i = 13; $i > -1; $i--) {
             $media = new Media();
             $media->setName($i.'.jpg');
-            $media->setStorage('/assets/images/'.$i.'.jpg');
+            $trickId = $this->getReference('tricks' . $i)->getId();
+            $media->setPicture('/assets/images/triks/'.$trickId.'/media/'.$media->getName());
+            copy('public/assets/images/tricks 1.jpg', 'public/assets/images/triks/'.$trickId.'/media/'.$media->getName());
             $media->setTricks($this->getReference('tricks' . $i));
             $media->setUser($this->getReference('user' . $i));
             $media->setCreatedAt(new \DateTimeImmutable());
-            $media->setIsMain(true);
-            $media->setIsVideo(false);
-            $manager->persist($media);
-        }
-        for ($i = 10; $i > 0; $i--) {
-            $media = new Media();
-            $media->setName($i.'.jpg');
-            $media->setStorage('/assets/videos/'.$i.'.jpg');
-            $media->setTricks($this->getReference('tricks' . $i));
-            $media->setUser($this->getReference('user' . $i));
-            $media->setCreatedAt(new \DateTimeImmutable());
-            $media->setIsMain(false);
             $media->setIsVideo(false);
             $manager->persist($media);
         }

@@ -1,4 +1,47 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="space-y-6">
+    <div>
+        <div class="flex items-center justify-center">
+            {{ form_label(form.name, "Nom du tricks",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+        </div>
+        <div class="mt-2">
+            {{ form_widget(form.name,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+            <div class="text-danger">{{ form_errors(form.name) }} </div>
+        </div>
+    </div>
+    <div>
+        <div class="flex items-center justify-center">
+            {{ form_label(form.pictureStorage, "Image Principale du triks ",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+        </div>
+        <div class="mt-2">
+            {{ form_widget(form.pictureStorage,  { 'attr': {'class': 'relative m-0 block w-full min-w-0 flex-auto rounded-md border border-solid border-accent bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-accent file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:ring-primary2 focus:text-neutral-700 '} }) }}
+            <div class="text-danger">{{ form_errors(form.pictureStorage) }}</div>
+        </div>
+    </div>
+    <div>
+        <div class="flex items-center justify-center">
+            {{ form_label(form.description, "Description",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+        </div>
+        <div class="mt-2">
+            {{ form_widget(form.description,  { 'attr': {'class': ' block  w-full rounded-md border-0  px-3 py-[0.32rem]  outline-none '} }) }}
+            <div class="text-danger">{{ form_errors(form.description) }}</div>
+        </div>
+    </div>
+    <div>
+        <div class="flex items-center justify-center">
+            {{ form_label(form.categorie, "Catégorie",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+        </div>
+        <div class="mt-2">
+            {{ form_widget(form.categorie,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+            <div class="text-danger">{{ form_errors(form.categorie) }}</div>
+        </div>
+    </div>
+    <div id="media" data-prototype="{{ form_row(form.media.vars.prototype)|e("html_attr")}}" class="text-center">
+    {{ form_row(form.media) }}
+        <span></span>
+    </div>
+
+
+
+    <button class="flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 lg:hover:-translate-y-1.5">{{ button_label|default("Créer") }}</button>
+    {{ form_end(form) }}

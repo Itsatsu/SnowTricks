@@ -7,9 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints AS Assert;
 
 #[ORM\Entity(repositoryClass: TricksRepository::class)]
+#[UniqueEntity(fields: ['name'], message: "Un tricks existe déjà avec ce nom ")]
 class Tricks
 {
     #[ORM\Id]
@@ -19,13 +21,18 @@ class Tricks
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Veuillez renseigner un nom de figure.')]
+    #[Assert\Length(min: 3,
+        max: 255,
+        minMessage: 'Le nom de la figure doit contenir au minimum {{ limit }} caractères.',
+        maxMessage: 'Le nom de la figure doit contenir au maximum {{ limit }} caractères.'
+    )]
     private ?string $name = null;
 
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'Veuillez renseigner une description.')]
-    #[Assert\Length(max: 255,
-        maxMessage: 'Le nom de la catégorie doit contenir au maximum {{ limit }} caractères.'
+    #[Assert\Length(min: 10,
+        maxMessage: 'la description du tricks doit contenir au minimum {{ limit }} caractères.'
     )]
     private ?string $description = null;
 
@@ -42,7 +49,6 @@ class Tricks
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'Veuillez renseigner une catégorie.')]
-
     private ?Group $categorie = null;
 
     #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Media::class)]
@@ -50,6 +56,9 @@ class Tricks
 
     #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
+
+    #[ORM\Column(length: 255)]
+    private ?string $pictureStorage = null;
 
     public function __construct()
     {
@@ -190,6 +199,18 @@ class Tricks
                 $comment->setTricks(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPictureStorage(): ?string
+    {
+        return $this->pictureStorage;
+    }
+
+    public function setPictureStorage(string $pictureStorage): static
+    {
+        $this->pictureStorage = $pictureStorage;
 
         return $this;
     }
