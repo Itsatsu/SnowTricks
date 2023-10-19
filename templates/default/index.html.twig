@@ -17,7 +17,7 @@
     </section>
     <section class="xl:mx-32 mx-5 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 mt-20 gap-x-10 gap-y-5" id="tricks">
         {% for trick in tricks %}
-        <article class="group relative bg-info-50 px-2 py-2 rounded-lg">
+        <article class="group relative bg-info-50 px-2 py-2 rounded-lg {% if loop.index > 5 %}hidden{% endif %}">
             <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-44 ">
                 <img src="{{ trick.pictureStorage }}" alt="un tricks"
                      class="h-full w-full object-cover object-center lg:h-full lg:w-full">
@@ -46,11 +46,34 @@
         {% endfor %}
     </section>
     <section class="flex justify-center pt-5">
-        <div class="inline-flex flex-col  justify-center font-medium px-2 bg-primary2 rounded-md lg:hover:-translate-y-1.5  lg:m-2 lg:p-2 lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 ">
-            <a href="#" type="button" class="inline-flex w-full flex-col items-center group">
+        <div  id="voirPlusButton" class="inline-flex flex-col  justify-center font-medium px-2 bg-primary2 rounded-md lg:hover:-translate-y-1.5  lg:m-2 lg:p-2 lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 ">
+            <a  type="button" class="inline-flex w-full flex-col items-center group">
                 <span class="text-2xl">Voir plus de résultats</span>
             </a>
         </div>
     </section>
 
 {% endblock %}
+
+{% block javascripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const voirPlusButton = document.getElementById("voirPlusButton");
+        const hiddenElements = document.querySelectorAll(".hidden");
+        let startIndex = 5; // Vous pouvez ajuster le nombre initial d'éléments visibles
+
+        voirPlusButton.addEventListener("click", function() {
+            for (let i = startIndex; i < startIndex + 5 && i < hiddenElements.length; i++) {
+                hiddenElements[i].classList.remove("hidden");
+            }
+
+            startIndex += 4;
+
+            // Masquer le bouton "Voir plus" si tous les éléments sont affichés
+            if (startIndex >= hiddenElements.length) {
+                voirPlusButton.style.display = "none";
+            }
+        });
+    });
+</script>
+{% endblock javascripts %}
