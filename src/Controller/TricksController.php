@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Tricks;
+use App\Form\CommentType;
 use App\Form\MediaType;
 use App\Form\TricksType;
+use App\Repository\CommentRepository;
 use App\Repository\TricksRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
@@ -76,6 +79,7 @@ class TricksController extends AbstractController
             }
            $entityManager->persist($trick);
            $entityManager->flush();
+            $this->addFlash('success', 'Votre tricks a bien été ajouté');
 
             return $this->redirectToRoute('app_tricks_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -87,13 +91,25 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/{name}', name: 'app_tricks_show', methods: ['GET'])]
-    public function show(Tricks $trick): Response
+    #[Route('/{name}', name: 'app_tricks_show', methods: ['GET', 'POST'])]
+    public function show(Request $request,Tricks $trick, EntityManagerInterface $entityManager): Response
     {
+        $form = $this->createForm(CommentType::class);
         $medias = $trick->getMedia();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment = $form->getData();
+            $comment->setTricks($trick);
+            $comment->setUser($this->getUser());
+            $comment->setCreatedAt(new \DateTimeImmutable());
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            $this->addFlash('success', 'Votre commentaire a bien été ajouté');
+        }
         return $this->render('tricks/show.html.twig', [
             'trick' => $trick,
             'medias' => $medias,
+            'form'=> $form,
         ]);
     }
 
