@@ -22,12 +22,12 @@
                 <div class="flex justify-center  mt-2 flex-col px-8 text-center">
                     {% if trick.media|length > 0 %}
                     {# photo/video #}
-                    <div class="inline-flex flex-col  lg:hidden justify-center font-medium px-2 bg-primary2 rounded-md lg:hover:-translate-y-1.5  lg:m-2 lg:p-2 lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 ">
-                        <a href="#" type="button" class="inline-flex w-full flex-col items-center group">
+                    <div id="voirMedia" class="inline-flex flex-col  lg:hidden justify-center font-medium px-2 bg-primary2 rounded-md lg:hover:-translate-y-1.5  lg:m-2 lg:p-2 lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 ">
+                        <a type="button" class="inline-flex w-full flex-col items-center group">
                             <span class="text-1xl">Voir les photos et videos</span>
                         </a>
                     </div>
-                        <div class=" mx-5 hidden lg:grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-5 gap-x-10 gap-y-5 ">
+                        <div class=" mx-5 hidden lg:grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-5 gap-x-10 gap-y-5 " id="mediaContainer">
                     {% for media in medias %}
 
 
@@ -116,7 +116,7 @@
                         {% if trick.comments|length > 0 %}
                         {% for comment in trick.comments %}
 
-                        <div class="flex flex-col md:flex-row justify-start rounded-xl m-2 p-2 bg-background2">
+                        <div class="flex flex-col md:flex-row justify-start rounded-xl m-2 p-2 bg-background2 {% if loop.index > 3 %}hidden{% endif %}" id="comment">
                             <div class="flex md:flex-col flex-row justify-between md:justify-center text-center items-center">
                                 <img
                                         src="{{ comment.user.photoPath }}"
@@ -137,6 +137,13 @@
 
                         </div>
                         {% endfor %}
+                            <section class="flex justify-center pt-5">
+                                <div  id="voirPlusComment" class="inline-flex flex-col  justify-center font-medium px-2 bg-primary2 rounded-md lg:hover:-translate-y-1.5  lg:m-2 lg:p-2 lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 ">
+                                    <a  type="button" class="inline-flex w-full flex-col items-center group">
+                                        <span class="text-2xl">Voir plus de commentaire</span>
+                                    </a>
+                                </div>
+                            </section>
                         {% else %}
                             <p>Il n'y a pas encore de commentaire</p>
                         {% endif %}
@@ -150,5 +157,37 @@
 
     </div>
 {% endblock %}
+{% block javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const voirPlusComment = document.getElementById("voirPlusComment");
+            const hiddenElements = document.querySelectorAll("#comment");
+            let startIndex = 3; // Vous pouvez ajuster le nombre initial d'éléments visibles
+
+            voirPlusComment.addEventListener("click", function() {
+                for (let i = startIndex; i < startIndex + 3 && i < hiddenElements.length; i++) {
+                    hiddenElements[i].classList.remove("hidden");
+                }
+
+                startIndex += 3;
+
+                // Masquer le bouton "Voir plus" si tous les éléments sont affichés
+                if (startIndex >= hiddenElements.length) {
+                    voirPlusComment.style.display = "none";
+                }
+            });
+            const voirMedia = document.getElementById("voirMedia");
+            const hiddenContainer = document.getElementById("mediaContainer");
+
+            voirMedia.addEventListener("click", function() {
+                hiddenContainer.classList.remove("hidden");
+                hiddenContainer.classList.add("grid");
+                voirMedia.style.display = "none";
+            });
+
+
+        });
+    </script>
+{% endblock javascripts %}
 
 

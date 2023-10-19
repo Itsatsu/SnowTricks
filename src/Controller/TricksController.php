@@ -8,6 +8,7 @@ use App\Form\TricksType;
 use App\Repository\TricksRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -86,7 +87,7 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_tricks_show', methods: ['GET'])]
+    #[Route('/{name}', name: 'app_tricks_show', methods: ['GET'])]
     public function show(Tricks $trick): Response
     {
         $medias = $trick->getMedia();
@@ -96,7 +97,7 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_tricks_edit', methods: ['GET', 'POST'])]
+    #[Route('/{name}/edit', name: 'app_tricks_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tricks $trick, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(TricksType::class, $trick);
