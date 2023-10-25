@@ -17,4 +17,13 @@ class DefaultController extends AbstractController
             'tricks' => $tricks
         ]);
     }
+
+    #[Route('/404', name: 'app_error')]
+    public function error(): Response
+    {
+        $this->addFlash('error', 'La page demandée n\'existe pas.');
+        return $this->redirectToRoute('app_default', [], Response::HTTP_SEE_OTHER);
+    }
+
 }
+
