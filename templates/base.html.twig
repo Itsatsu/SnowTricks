@@ -48,7 +48,7 @@
 
              {%  if app.user %}
             <li class="inline-flex flex-col  justify-center font-medium px-2 flex ">
-                <a href="#c" type="button" class="inline-flex w-full lg:py-2 flex-col items-center group ">
+                <a href="{{path('app_user_show', {'username': app.user.username})}}" type="button" class="inline-flex w-full lg:py-2 flex-col items-center group ">
                     <img
                             src="{{ app.user.photoPath}}"
                             class="rounded-full lg:hover:-translate-y-1.5 lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 lg:m-1 "
