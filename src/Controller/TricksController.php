@@ -15,18 +15,11 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function Sodium\add;
 
 #[Route('/tricks')]
 class TricksController extends AbstractController
 {
-    #[Route('/', name: 'app_tricks_index', methods: ['GET'])]
-    public function index(TricksRepository $tricksRepository): Response
-    {
-        return $this->render('tricks/index.html.twig', [
-            'tricks' => $tricksRepository->findAll(),
-        ]);
-    }
-
     #[Route('/ajouter', name: 'app_tricks_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -92,8 +85,14 @@ class TricksController extends AbstractController
     }
 
     #[Route('/{name}', name: 'app_tricks_show', methods: ['GET', 'POST'])]
-    public function show(Request $request,Tricks $trick, EntityManagerInterface $entityManager): Response
+    public function show(Request $request, EntityManagerInterface $entityManager, TricksRepository $tricksRepository): Response
     {
+        $trick = $tricksRepository->findOneBy(['name' => 'name']);
+
+        if (!$trick){
+            $this->addFlash('error',"Le tricks n'existe pas ou n'est plus disponible");
+            return $this->redirectToRoute('app_default', [], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(CommentType::class);
         $medias = $trick->getMedia();
         $form->handleRequest($request);
