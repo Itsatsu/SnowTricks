@@ -41,7 +41,7 @@ class TricksType extends AbstractType
                 'mapped' => false,
                 'multiple' => false,
                 'required' => false,
-                'attr' => ['accept' => '.jpg,.jpeg', 'maxSize' => '5M'],
+                'attr' => ['accept' => '.jpg,.jpeg', 'maxSize' => '5M','maxFiles' => '1', 'id' => 'tricks_pictureStorage', 'onchange' => "afficherApercuImage()"],
                 'constraints' => [
                     new Assert\File([
                         'maxSize' => '5M',

@@ -41,11 +41,13 @@ class TricksController extends AbstractController
             $filePicture = $form->get('pictureStorage')->getData();
             //ajout de l'image principale si elle existe sinon ajout d'une image par défaut
             if ($filePicture) {
-                $filePicture->move('../public'.$cheminDossier, '/cover.jpg');
+                $filePicture->move('../public'.$cheminDossier, '/cover'.$filePicture->guessExtension());
+                $trick->setPictureStorage($cheminDossier.'/cover'.$filePicture->guessExtension());
             }else{
                 copy('../public/assets/images/cover.jpg', '../public'.$cheminDossier.'/cover.jpg');
+                $trick->setPictureStorage($cheminDossier.'/cover.jpg');
             }
-            $trick->setPictureStorage($cheminDossier.'/cover.jpg');
+
             if($trick->getMedia()){
                 $i =0;
                foreach ($trick->getMedia() as $media) {
@@ -85,14 +87,8 @@ class TricksController extends AbstractController
     }
 
     #[Route('/{name}', name: 'app_tricks_show', methods: ['GET', 'POST'])]
-    public function show(Request $request, EntityManagerInterface $entityManager, TricksRepository $tricksRepository): Response
+    public function show(Request $request, Tricks $trick, EntityManagerInterface $entityManager, TricksRepository $tricksRepository): Response
     {
-        $trick = $tricksRepository->findOneBy(['name' => 'name']);
-
-        if (!$trick){
-            $this->addFlash('error',"Le tricks n'existe pas ou n'est plus disponible");
-            return $this->redirectToRoute('app_default', [], Response::HTTP_SEE_OTHER);
-        }
         $form = $this->createForm(CommentType::class);
         $medias = $trick->getMedia();
         $form->handleRequest($request);

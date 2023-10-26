@@ -55,6 +55,7 @@ class Tricks
     private Collection $media;
 
     #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Comment::class,cascade: ['remove'] , orphanRemoval: true)]
+    #[ORM\OrderBy(['createdAt' => 'DESC'])]
     private Collection $comments;
 
     #[ORM\Column(length: 255)]
