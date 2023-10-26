@@ -1,13 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Modification du profil {% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+    {{ include('user/_form_edit.html.twig') }}
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+{% endblock %}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+{% block javascripts %}
+    <script>
+        function afficherApercuImage() {
+            const inputImage = document.getElementById('user_edit_photoPath');
+            const apercuImage = document.getElementById('apercuImage');
+            const divApercu = document.getElementById('divApercu');
 
-    {{ include('user/_delete_form.html.twig') }}
+            if (inputImage.files && inputImage.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    divApercu.classList.remove('hidden');
+                    apercuImage.src = e.target.result;
+                    apercuImage.style.display = 'block';
+                };
+
+                reader.readAsDataURL(inputImage.files[0]);
+            }else {
+            // Si l'input est vide, effacez l'image précédemment chargée
+                divApercu.classList.add('hidden');
+            apercuImage.src = '';
+            apercuImage.style.display = 'none';
+        }
+        }
+    </script>
 {% endblock %}
