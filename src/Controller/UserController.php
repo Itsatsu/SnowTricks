@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/utilisateur')]
@@ -25,7 +26,7 @@ class UserController extends AbstractController
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         if ($this->getUser() !== $user) {
-            $this->addFlash('danger', "Vous ne pouvez pas modifier le compte d'un autre utilisateur.");
+            $this->addFlash('error', "Vous ne pouvez pas modifier le compte d'un autre utilisateur.");
             return $this->redirectToRoute('app_default', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -33,6 +34,15 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $cheminDossier = '/assets/images/user/'.$user->getId();
+            if (!is_dir('../public'.$cheminDossier)) {
+                mkdir('../public'.$cheminDossier,0777);
+            }
+            if($form->get('photoPath')->getData() !== null) {
+                $file = $form->get('photoPath')->getData();
+                $user->setPhotoPath($cheminDossier.'/avatar.'.$file->guessExtension());
+                $file->move('../public'.$cheminDossier.'/','avatar.'.$file->guessExtension());
+            }
             $entityManager->flush();
             $this->addFlash('success', "Votre compte a bien été modifié.");
             return $this->redirectToRoute('app_user_show', ['username' => $user->getUsername()], Response::HTTP_SEE_OTHER);
