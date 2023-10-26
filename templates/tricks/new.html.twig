@@ -4,11 +4,11 @@
 
 {% block body %}
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div class="xl:mx-96 lg:mx-56  mx-5">
             <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Création d'un nouveau tricks</h2>
         </div>
 
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div class="mt-10 xl:mx-96 lg:mx-56  mx-5">
             {{ include('tricks/_form.html.twig') }}
             <div class="text-sm flex flex-col items-center mt-4">
                 <a href="{{ path('app_default') }}" class="font-semibold text-indigo-600 hover:text-indigo-500"> Retour a l'accueil</a>
@@ -37,18 +37,16 @@
             });
         }
 
-        function addButton(collection, nouveauBouton){
+        function addButton(collection, nouveauBouton) {
             let prototype = collection.dataset.prototype;
-
             let index = collection.dataset.index;
-
             prototype = prototype.replace(/__name__/g, index);
 
             let content = document.createElement("html");
             content.innerHTML = prototype;
             let newForm = content.querySelector("div");
             newForm.className = "m-5 border border-accent rounded-md px-5";
-            let checkbox = newForm.querySelector("#tricks_media_"+ index +"_isVideo");
+            let checkbox = newForm.querySelector("#tricks_media_" + index + "_isVideo");
             let boutonSuppr = document.createElement("button");
             let title = document.createElement("h4");
             title.className = "text-xl font-bold";
@@ -65,35 +63,93 @@
             let boutonAjout = collection.querySelector(".ajout-media");
 
             span.insertBefore(newForm, boutonAjout);
-            let inputImage = document.querySelector("#tricks_media_"+ index +"_picture");
-            let inputVideo = document.querySelector("#tricks_media_"+ index +"_video");
+
+            let inputImage = newForm.querySelector("#tricks_media_" + index + "_picture");
+            let inputVideo = newForm.querySelector("#tricks_media_" + index + "_video");
+            let divApercu = document.createElement("div");
+            divApercu.className = "flex items-center flex-col";
+            let apercuImage = document.createElement("img");
+            apercuImage.id = "apercuImage_" + index;
+            apercuImage.className = "md:w-44 w-28 rounded-lg shadow-lg m-3";
+            divApercu.id = "divApercu_" + index;
+            divApercu.appendChild(apercuImage);
+            inputImage.parentElement.insertBefore(divApercu, inputImage);
             inputVideo.parentElement.classList.add("hidden");
             inputImage.required = true;
-            boutonSuppr.addEventListener("click", function(){
-                this.previousElementSibling.parentElement.remove();
-                collection.dataset.index--;
-            })
 
-            checkbox.addEventListener("change", function(){
-                if(this.checked){
+            inputImage.addEventListener("change", function() {
+                afficherApercuMedia(index);
+            });
+
+            boutonSuppr.addEventListener("click", function() {
+                this.parentElement.remove(); // Utilisez "this.parentElement" pour supprimer le formulaire parent
+                collection.dataset.index--;
+            });
+
+            checkbox.addEventListener("change", function() {
+                if (this.checked) {
                     inputVideo.parentElement.classList.remove("hidden");
                     inputVideo.required = true;
-
                     inputImage.parentElement.classList.add("hidden");
                     inputImage.value = null;
                     inputImage.required = false;
-
-                }else{
+                } else {
                     inputVideo.parentElement.classList.add("hidden");
                     inputVideo.value = null;
                     inputVideo.required = false;
-
                     inputImage.parentElement.classList.remove("hidden");
                     inputImage.required = true;
                 }
-            })
+            });
+        }
 
+        function afficherApercuMedia(index) {
+            let inputImage = document.querySelector("#tricks_media_"+ index +"_picture");
+            const apercuImage = document.getElementById("apercuImage_"+index);
+
+            if (inputImage.files && inputImage.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    apercuImage.src = e.target.result;
+                    apercuImage.style.display = 'block';
+                };
+
+                reader.readAsDataURL(inputImage.files[0]);
+            }else {
+                // Si l'input est vide, effacez l'image précédemment chargée
+                apercuImage.src = '';
+                apercuImage.style.display = 'none';
+            }
         }
 
     </script>
+    <script>
+        function afficherApercuImage() {
+            const inputImage = document.getElementById('tricks_pictureStorage');
+            const apercuImage = document.getElementById('apercuImage');
+            const divApercu = document.getElementById('divApercu');
+
+            if (inputImage.files && inputImage.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    divApercu.classList.remove('hidden');
+                    apercuImage.src = e.target.result;
+                    apercuImage.style.display = 'block';
+                };
+
+                reader.readAsDataURL(inputImage.files[0]);
+            }else {
+                // Si l'input est vide, effacez l'image précédemment chargée
+                divApercu.classList.add('hidden');
+                apercuImage.src = '';
+                apercuImage.style.display = 'none';
+            }
+        }
+    </script>
+    <script>
+
+    </script>
+
 {% endblock javascripts %}

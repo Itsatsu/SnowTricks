@@ -10,8 +10,12 @@
         </div>
     </div>
     <div>
+
         <div class="flex items-center justify-center">
             {{ form_label(form.pictureStorage, "Image Principale du triks ",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+        </div>
+        <div class="flex items-center hidden flex-col" id="divApercu">
+            <img src="" id="apercuImage" class="md:w-44 w-28 rounded-lg shadow-lg">
         </div>
         <div class="mt-2">
             {{ form_widget(form.pictureStorage,  { 'attr': {'class': 'relative m-0 block w-full min-w-0 flex-auto rounded-md border border-solid border-accent bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-accent file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:ring-primary2 focus:text-neutral-700 '} }) }}

@@ -107,7 +107,7 @@
                         {% if trick.comments|length > 0 %}
                         {% for comment in trick.comments %}
 
-                        <div class="flex flex-col md:flex-row justify-start rounded-xl m-2 p-2 bg-background2 {% if loop.index > 3 %}hidden{% endif %}" id="comment">
+                        <div class="flex flex-col md:flex-row justify-start rounded-xl m-2 p-2 bg-background2 {% if loop.index > 10 %}hidden{% endif %}" id="comment">
                             <div class="flex md:flex-col flex-row justify-between md:justify-center text-center items-center">
                                 <img
                                         src="{{ comment.user.photoPath }}"
@@ -151,14 +151,14 @@
         document.addEventListener("DOMContentLoaded", function() {
             const voirPlusComment = document.getElementById("voirPlusComment");
             const hiddenElements = document.querySelectorAll("#comment");
-            let startIndex = 3; // Vous pouvez ajuster le nombre initial d'éléments visibles
+            let startIndex = 10; // Vous pouvez ajuster le nombre initial d'éléments visibles
 
             voirPlusComment.addEventListener("click", function() {
-                for (let i = startIndex; i < startIndex + 3 && i < hiddenElements.length; i++) {
+                for (let i = startIndex; i < startIndex + 10 && i < hiddenElements.length; i++) {
                     hiddenElements[i].classList.remove("hidden");
                 }
 
-                startIndex += 3;
+                startIndex += 10;
 
                 // Masquer le bouton "Voir plus" si tous les éléments sont affichés
                 if (startIndex >= hiddenElements.length) {
