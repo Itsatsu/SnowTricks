@@ -27,9 +27,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: "Le nom d'utilisateur doit contenir au moins {{ limit }} caractères.",
         maxMessage: "Le nom d'utilisateur doit contenir au maximum {{ limit }} caractères."
     )]
-
-    #assert le username de dois pas exitster
-
     private ?string $username = null;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -45,7 +42,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Veuillez renseigner votre mot de passe')]
-
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -53,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank(message: 'Veuillez renseigner votre prénom')]
-    #[Assert\Assert\Regex(
+    #[Assert\Regex(
         pattern: '/^[a-zA-Z\-]+$/',
         message: 'Le prénom ne peut contenir que des lettres et des tirets.'
     )]
