@@ -28,12 +28,103 @@
             boutonAjout.innerText = "Ajouter un media";
 
             let nouveauBouton = span.append(boutonAjout);
+            let boutonSubmit = document.getElementById("submit");
 
             collection.dataset.index = collection.querySelectorAll("input").length;
 
             boutonAjout.addEventListener("click", function(event){
                 event.preventDefault();
                 addButton(collection, nouveauBouton);
+            });
+
+
+
+            boutonSubmit.addEventListener("click", function (event) {
+
+                let name = document.getElementById("tricks_name");
+                let description = document.getElementById("tricks_description");
+                let mediaCollection = document.getElementsByClassName("media");
+                let totalError = 0;
+
+
+
+                if (name.value === "") {
+
+                    if (name.parentElement.querySelector("#errorTitle") === null) {
+                        let error = document.createElement("p");
+                        error.id = "errorTitle";
+                        error.innerText = "Veuillez remplir le nom du tricks";
+                        error.style.color = "red";
+                        name.parentElement.appendChild(error);
+
+                        name.classList.add("border-danger");
+                        name.classList.add("border-2");
+                        totalError++;
+                    }
+                }
+                if (description.value === "" || description.value.length > 255 || description.value.length < 5) {
+                    if (description.parentNode.querySelector("#errorDescription") === null) {
+                        let error = document.createElement("p");
+                        error.id = "errorDescription";
+                        error.style.color = "red";
+                        error.innerText = "Veuillez remplir la description du tricks (entre 5 et 255 caractères)";
+                        description.parentNode.appendChild(error);
+                        description.classList.add("border-danger");
+                        description.classList.add("border-2");
+                        totalError++;
+                    }
+                }
+
+                Array.from(mediaCollection).forEach(function (media) {
+                    let index = parseInt(media.id.split('_')[1], 10);
+                    let inputName = document.getElementById("tricks_media_" + index + "_name");
+                    let inputIsVideo = document.getElementById("tricks_media_" + index + "_isVideo");
+                    let inputPicture = document.getElementById("tricks_media_" + index + "_picture");
+                    let inputVideo = document.getElementById("tricks_media_" + index + "_video");
+                    if (inputName.value === "") {
+                        if (inputName.parentElement.querySelector("#errorName_"+index) === null) {
+                            let error = document.createElement("p");
+                            error.id = "errorName_"+index;
+                            error.style.color = "red";
+                            error.innerText = "Veuillez remplir le nom du media";
+                            inputName.parentElement.appendChild(error);
+                            inputName.classList.add("border-danger");
+                            inputName.classList.add("border-2");
+                            totalError++;
+                        }
+                    }
+                    if (inputIsVideo.checked) {
+                        if (inputVideo.value === "") {
+                            if (inputVideo.parentNode.querySelector("#errorVideo_"+index) === null) {
+                                let error = document.createElement("p");
+                                error.id = "errorVideo_"+index;
+                                error.style.color = "red";
+                                error.innerText = "Veuillez remplir le lien de la video";
+                                inputVideo.parentNode.appendChild(error);
+                                inputVideo.classList.add("border-danger");
+                                inputVideo.classList.add("border-2");
+                                totalError++;
+                            }
+                        }
+                    } else {
+                        if (inputPicture.value === "") {
+                            if (inputPicture.parentNode.querySelector("#errorPicture_"+index) === null) {
+                                let error = document.createElement("p");
+                                error.id = "errorPicture_"+index;
+                                error.style.color = "red";
+                                error.innerText = "Veuillez ajouter une image";
+                                inputPicture.parentNode.appendChild(error);
+                                inputPicture.classList.add("border-danger");
+                                inputPicture.classList.add("border-2");
+                                totalError++;
+                            }
+                        }
+                    }
+                });
+
+                if (totalError < 0) {
+                    event.preventDefault();
+                }
             });
         }
 
@@ -45,7 +136,8 @@
             let content = document.createElement("html");
             content.innerHTML = prototype;
             let newForm = content.querySelector("div");
-            newForm.className = "m-5 border border-accent rounded-md px-5";
+            newForm.className = "m-5 border border-accent rounded-md px-5 media";
+            newForm.id = "media_" + index;
             let checkbox = newForm.querySelector("#tricks_media_" + index + "_isVideo");
             let boutonSuppr = document.createElement("button");
             let title = document.createElement("h4");
@@ -148,8 +240,4 @@
             }
         }
     </script>
-    <script>
-
-    </script>
-
 {% endblock javascripts %}
