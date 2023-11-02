@@ -76,7 +76,7 @@ class TricksController extends AbstractController
            $entityManager->flush();
             $this->addFlash('success', 'Votre tricks a bien été ajouté');
 
-            return $this->redirectToRoute('app_tricks_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_default', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('tricks/new.html.twig', [
