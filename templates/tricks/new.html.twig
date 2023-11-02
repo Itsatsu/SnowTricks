@@ -62,7 +62,7 @@
                         totalError++;
                     }
                 }
-                if (description.value === "" || description.value.length > 255 || description.value.length < 5) {
+                if (description.value === "" || description.value.length > 255 || description.value.length < 10) {
                     if (description.parentNode.querySelector("#errorDescription") === null) {
                         let error = document.createElement("p");
                         error.id = "errorDescription";

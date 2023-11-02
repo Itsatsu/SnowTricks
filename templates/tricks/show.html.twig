@@ -152,19 +152,21 @@
             const voirPlusComment = document.getElementById("voirPlusComment");
             const hiddenElements = document.querySelectorAll("#comment");
             let startIndex = 10; // Vous pouvez ajuster le nombre initial d'éléments visibles
+            if (voirPlusComment !== null) {
+                voirPlusComment.addEventListener("click", function() {
+                    for (let i = startIndex; i < startIndex + 10 && i < hiddenElements.length; i++) {
+                        hiddenElements[i].classList.remove("hidden");
+                    }
 
-            voirPlusComment.addEventListener("click", function() {
-                for (let i = startIndex; i < startIndex + 10 && i < hiddenElements.length; i++) {
-                    hiddenElements[i].classList.remove("hidden");
-                }
+                    startIndex += 10;
 
-                startIndex += 10;
+                    // Masquer le bouton "Voir plus" si tous les éléments sont affichés
+                    if (startIndex >= hiddenElements.length) {
+                        voirPlusComment.style.display = "none";
+                    }
+                });
+            }
 
-                // Masquer le bouton "Voir plus" si tous les éléments sont affichés
-                if (startIndex >= hiddenElements.length) {
-                    voirPlusComment.style.display = "none";
-                }
-            });
             const voirMedia = document.getElementById("voirMedia");
             const hiddenContainer = document.getElementById("mediaContainer");
 

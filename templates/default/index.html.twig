@@ -52,7 +52,16 @@
             </a>
         </div>
     </section>
+    {% if app.user %}
+    <section  class="flex justify-center pt-5">
+        <div  class="inline-flex flex-col  justify-center font-medium px-2 bg-primary2 rounded-md lg:hover:-translate-y-1.5  lg:m-2 lg:p-2 lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 ">
+            <a  type="button" class="inline-flex w-full flex-col items-center group" href="{{ path('app_tricks_new') }}">
+                <span class="text-2xl">Ajouter un tricks</span>
+            </a>
+        </div>
+    </section>
 
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
