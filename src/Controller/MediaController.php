@@ -7,6 +7,7 @@ use App\Form\MediaType;
 use App\Repository\MediaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -69,13 +70,13 @@ class MediaController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_media_delete', methods: ['POST'])]
-    public function delete(Request $request, Media $medium, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Media $media, EntityManagerInterface $entityManager): JsonResponse
     {
-        if ($this->isCsrfTokenValid('delete'.$medium->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($medium);
+            $entityManager->remove($media);
             $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('app_media_index', [], Response::HTTP_SEE_OTHER);
+        $response = ['message' => 'La suppression du média a réussi.'];
+
+        return new JsonResponse($response);
     }
 }
