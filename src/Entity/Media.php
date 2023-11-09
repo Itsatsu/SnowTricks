@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\MediaRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints AS Assert;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
 class Media
@@ -22,7 +21,6 @@ class Media
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'Veuillez renseigner si le média est une image ou une vidéo.')]
     private ?bool $isVideo = null;
 
     #[ORM\ManyToOne(inversedBy: 'medias')]
