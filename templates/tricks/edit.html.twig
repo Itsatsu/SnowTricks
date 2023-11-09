@@ -3,11 +3,181 @@
 {% block title %}Edit Tricks{% endblock %}
 
 {% block body %}
-    <h1>Edit Tricks</h1>
 
-    {{ include('tricks/_form.html.twig', {'button_label': 'Update'}) }}
+    <section id="Modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center w-full">
 
-    <a href="{{ path('app_tricks_index') }}">back to list</a>
+        <div class="modal-content p-5 max-w-md rounded shadow-lg bg-secondary2 w-96 flex flex-col ">
+            <div class="flex justify-end">
+                <button id="closeModalButton" class="right-0">X</button>
+            </div>
+            {{form_start(formMedia) }}
+            <div class="flex w-full flex-col justify-center">
+                <div>
+                    <div class="flex items-center justify-center">
+                        {{ form_label(formMedia.name, "nom du media",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+                    </div>
+                    <div class="mt-2">
+                        {{ form_widget(formMedia.name,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+                        <div class="text-danger">{{ form_errors(formMedia.name) }}</div>
+                    </div>
+                </div>
 
-    {{ include('tricks/_delete_form.html.twig') }}
+                <div class="mt-3">
+                    <div class="flex items-center justify-center">
+                        {{ form_label(formMedia.isVideo, "Cocher si video",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+                    </div>
+                    <div class="flex justify-center">
+                        {{ form_widget(formMedia.isVideo,  { 'attr': {'class': 'block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+                        <div class="text-danger">{{ form_errors(formMedia.isVideo) }}</div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="flex items-center justify-center">
+                        {{ form_label(formMedia.picture, "Ajouter l'image",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+                    </div>
+                    <div class="flex items-center hidden flex-col" id="divApercuMedia">
+                        <img src="" id="apercuMedia" class="md:w-44 w-28 rounded-lg shadow-lg">
+                    </div>
+                    <div class="mt-2">
+                        {{ form_widget(formMedia.picture,  { 'attr': {'class': 'relative m-0 block w-full min-w-0 flex-auto rounded-md border border-solid border-accent bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-accent file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:ring-primary2 focus:text-neutral-700 '} }) }}
+                        <div class="text-danger">{{ form_errors(formMedia.picture) }}</div>
+                    </div>
+                </div>
+                <div class="mt-3 hidden">
+                    <div class="flex items-center justify-center">
+                        {{ form_label(formMedia.video, "lien de la video",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+                    </div>
+                    <div class="mt-2">
+                        {{ form_widget(formMedia.video,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+                        <div class="text-danger">{{ form_errors(formMedia.video) }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="mx-0 my-2 flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 lg:hover:-translate-y-1.5">Créer</button>
+            {{ form_row(formMedia._token_media) }}
+            {{ form_end(formMedia) }}
+        </div>
+    </section>
+            {{ include('tricks/_form_edit.html.twig', {'button_label': 'Mettre a jour'}) }}
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function deleteMedia(mediaId) {
+            if (confirm('Voulez-vous vraiment supprimer ce média ?')) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/media/' + mediaId, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            // Suppression réussie : masquez ou supprimez l'élément média de la page
+                            const button = document.querySelector('.delete-media-button[data-media-id="' + mediaId + '"]');
+                            if (button) {
+                                button.parentElement.style.display = 'none';
+                            }
+                        } else {
+                            // Gérez les erreurs en cas d'échec de la suppression
+                            alert('Erreur lors de la suppression du média.');
+                        }
+                    }
+                };
+
+                // Envoyez le mediaId dans le corps de la requête en tant que JSON
+                xhr.send(JSON.stringify({mediaId: mediaId}));
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const openModalButton = document.getElementById('openModalButton');
+            const modal = document.getElementById('Modal');
+            const closeModalButton = document.getElementById('closeModalButton');
+
+            openModalButton.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+            });
+
+            // Ajoutez un gestionnaire d'événement pour fermer la modale
+            closeModalButton.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+
+
+        });
+    </script>
+
+    <script>
+			function afficherApercuImage() {
+				const inputImage = document.getElementById('edit_tricks_pictureStorage');
+				const apercuImage = document.getElementById('apercuImage');
+				const divApercu = document.getElementById('divApercu');
+
+				if (inputImage.files && inputImage.files[0]) {
+					const reader = new FileReader();
+
+					reader.onload = function (e) {
+						divApercu.classList.remove('hidden');
+						apercuImage.src = e.target.result;
+						apercuImage.style.display = 'block';
+					};
+
+					reader.readAsDataURL(inputImage.files[0]);
+				}else {
+					// Si l'input est vide, effacez l'image précédemment chargée
+					divApercu.classList.add('hidden');
+					apercuImage.src = '';
+					apercuImage.style.display = 'none';
+				}
+			}
+    </script>
+    <script>
+			function afficherApercuMedia() {
+				const inputImage = document.getElementById('media_picture');
+				const apercuImage = document.getElementById('apercuMedia');
+				const divApercu = document.getElementById('divApercuMedia');
+
+				if (inputImage.files && inputImage.files[0]) {
+					const reader = new FileReader();
+
+					reader.onload = function (e) {
+						divApercu.classList.remove('hidden');
+						apercuImage.src = e.target.result;
+						apercuImage.style.display = 'block';
+					};
+
+					reader.readAsDataURL(inputImage.files[0]);
+				}else {
+					// Si l'input est vide, effacez l'image précédemment chargée
+					divApercu.classList.add('hidden');
+					apercuImage.src = '';
+					apercuImage.style.display = 'none';
+				}
+			}
+            window.onload = () => {
+              let checkbox = document.getElementById("media_isVideo");
+
+              let inputVideo = document.getElementById("media_video");
+              let inputImage = document.getElementById("media_picture");
+              checkbox.addEventListener("change", function () {
+                if (this.checked) {
+                  inputVideo.parentElement.parentElement.classList.remove("hidden");
+                  inputVideo.required = true;
+                  inputImage.parentElement.parentElement.classList.add("hidden");
+                  inputImage.value = null;
+                  inputImage.required = false;
+                } else {
+                  inputVideo.parentElement.parentElement.classList.add("hidden");
+                  inputVideo.value = null;
+                  inputVideo.required = false;
+                  inputImage.parentElement.parentElement.classList.remove("hidden");
+                  inputImage.required = true;
+                }
+              });
+            };
+
+    </script>
 {% endblock %}
