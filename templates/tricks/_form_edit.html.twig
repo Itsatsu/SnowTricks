@@ -1,0 +1,117 @@
+{{ form_start(form) }}
+<section class="mx-2 lg:mt-10 mt-2 ">
+    <div class="mx-auto max-w-7xl  bg-info-50">
+        <div class=" w-full overflow-hidden rounded-2xl">
+            <img src="{{ trick.pictureStorage }}" alt="Un tricks"
+                 class=" h-[50vw] lg:h-[34vw] w-full object-cover object-left-top ">
+            <div
+                    class="absolute  left-0 right-0 top-14  overflow-hidden bg-fixed">
+                <div class="flex h-[40vw] lg:h-[34vw] items-center justify-center   ">
+                    <div class=" text-center text-white backdrop-blur-sm border-0 rounded-2xl md:p-4 md:pb-5">
+                        <h1 class=" text-2xl md:text-4xl xl:text-7xl lg:text-6xl font-bold text-primary2">{{ trick.name }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="flex justify-center  mt-2 flex-col px-8 text-center">
+            <div>
+
+                <div class="flex items-center justify-center">
+                    {{ form_label(form.pictureStorage, "Image Principale du triks ",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+                </div>
+                <div class="flex items-center hidden flex-col" id="divApercu">
+                    <img src="" id="apercuImage" class="md:w-44 w-28 rounded-lg shadow-lg">
+                </div>
+                <div class="mt-2">
+                    {{ form_widget(form.pictureStorage,  { 'attr': {'class': 'relative m-0 block w-full min-w-0 flex-auto rounded-md border border-solid border-accent bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-accent file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:ring-primary2 focus:text-neutral-700 '} }) }}
+                    <div class="text-danger">{{ form_errors(form.pictureStorage) }}</div>
+                </div>
+            </div>
+
+
+
+            {% if trick.media|length > 0 %}
+                {# photo/video #}
+                <div id="voirMedia" class="inline-flex flex-col  hidden justify-center font-medium px-2 bg-primary2 rounded-md lg:hover:-translate-y-1.5  lg:m-2 lg:p-2 lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 ">
+                    <a type="button" class="inline-flex w-full flex-col items-center group">
+                        <span class="text-1xl">Voir les photos et videos</span>
+                    </a>
+                </div>
+                <label class="mt-5"> Les médias</label>
+                <div class=" mx-5 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-5 gap-x-10 gap-y-5 " id="mediaContainer">
+
+                    {% for media in trick.media %}
+
+
+                        {% if media.isVideo %}
+                            <div class=" relative">
+                                <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-36 ">
+                                    <iframe class="w-full h-full object-cover object-center lg:h-full lg:w-full" allow="fullscreen" src="{{ media.video }}">
+                                    </iframe>
+                                </div>
+                                <button onclick="deleteMedia({{ media.id }})" type="button" class=" delete-media-button absolute bottom-0 right-0" data-media-id="{{ media.id }}"><img class="" src="{{ asset('images/delete.png') }}"> </button>
+                            </div>
+                        {% else %}
+                            <div class=" relative">
+                                <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75- h-36 ">
+                                    <img src="{{ media.picture }}" alt="{{ media.name }}"
+                                         class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+                                </div>
+                                <button onclick="deleteMedia({{ media.id }})" type="button" class=" delete-media-button absolute bottom-0 right-0" data-media-id="{{ media.id }}"><img class="" src="{{ asset('images/delete.png') }}"> </button>
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Il n'y a pas encore de photo ou video supplémentaire</p>
+
+            {% endif %}
+
+            <button type="button" id="openModalButton" class="mx-0 my-2 flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 lg:hover:-translate-y-1.5"">Ajouter des medias</a>
+
+        </div>
+        {# text #}
+        <div class="p-5">
+            <div class="flex items-center justify-center">
+                {{ form_label(form.name, "Nom du tricks",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+            </div>
+            <div class="mt-2">
+                {{ form_widget(form.name,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+                <div class="text-danger">{{ form_errors(form.name) }} </div>
+            </div>
+        </div>
+        <div class="p-5">
+            <div>
+                <div class="flex items-center justify-center">
+                    {{ form_label(form.description, "Description",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+                </div>
+                <div class="mt-2">
+                    {{ form_widget(form.description,  { 'attr': {'class': ' block  w-full rounded-md border-0  px-3 py-[0.32rem]  outline-none '} }) }}
+                    <div class="text-danger">{{ form_errors(form.description) }}</div>
+                </div>
+                <div>
+                    <div class="flex items-center justify-center">
+                        {{ form_label(form.categorie, "Catégorie",  { 'label_attr': {'class': 'block text-sm font-medium leading-6 text-gray-900'} }) }}
+                    </div>
+                    <div class="mt-2">
+                        {{ form_widget(form.categorie,  { 'attr': {'class': 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-accent placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary2 sm:text-sm sm:leading-6'} }) }}
+                        <div class="text-danger">{{ form_errors(form.categorie) }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row mr-5">
+                {{ form_rest(form) }}
+                <button id='submit'class=" mx-0 md:mx-3 my-2 flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 lg:hover:-translate-y-1.5">{{ button_label|default("Créer") }}</button>
+                {{ form_end(form) }}
+                <a href="{{ path('app_tricks_show',{'name': trick.name}) }}" class="mx-0 md:mx-3 my-2 flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 lg:hover:-translate-y-1.5">Retour au tricks</a>
+                {{ include('tricks/_delete_form.html.twig') }}
+            </div>
+
+        </div>
+    </div>
+</section>
+
+

@@ -48,7 +48,7 @@
 
 
 
-                if (name.value === "") {
+                if (name.value === ""|| name.value.length >= 255 || name.value.length <= 3) {
 
                     if (name.parentElement.querySelector("#errorTitle") === null) {
                         let error = document.createElement("p");
@@ -59,20 +59,20 @@
 
                         name.classList.add("border-danger");
                         name.classList.add("border-2");
-                        totalError++;
                     }
+                  totalError++;
                 }
-                if (description.value === "" || description.value.length > 255 || description.value.length < 10) {
+                if (description.value === "" || description.value.length >= 255 || description.value.length <= 10) {
                     if (description.parentNode.querySelector("#errorDescription") === null) {
                         let error = document.createElement("p");
                         error.id = "errorDescription";
                         error.style.color = "red";
-                        error.innerText = "Veuillez remplir la description du tricks (entre 5 et 255 caractères)";
+                        error.innerText = "Veuillez remplir la description du tricks (entre 10 et 255 caractères)";
                         description.parentNode.appendChild(error);
                         description.classList.add("border-danger");
                         description.classList.add("border-2");
-                        totalError++;
                     }
+                  totalError++;
                 }
 
                 Array.from(mediaCollection).forEach(function (media) {
@@ -90,8 +90,9 @@
                             inputName.parentElement.appendChild(error);
                             inputName.classList.add("border-danger");
                             inputName.classList.add("border-2");
-                            totalError++;
+
                         }
+                      totalError++;
                     }
                     if (inputIsVideo.checked) {
                         if (inputVideo.value === "") {
@@ -103,8 +104,9 @@
                                 inputVideo.parentNode.appendChild(error);
                                 inputVideo.classList.add("border-danger");
                                 inputVideo.classList.add("border-2");
-                                totalError++;
+
                             }
+                          totalError++;
                         }
                     } else {
                         if (inputPicture.value === "") {
@@ -116,13 +118,14 @@
                                 inputPicture.parentNode.appendChild(error);
                                 inputPicture.classList.add("border-danger");
                                 inputPicture.classList.add("border-2");
-                                totalError++;
+
                             }
+                          totalError++;
                         }
                     }
                 });
-
-                if (totalError < 0) {
+                console.log(totalError);
+                if (totalError > 0) {
                     event.preventDefault();
                 }
             });
