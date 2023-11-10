@@ -41,7 +41,7 @@ security:
          - { path: ^/profil/modifier, roles: ROLE_USER } # permet de modifier son profil uniquement si on est connecté
          - { path: ^/tricks/ajouter, roles: ROLE_USER } # permet d'ajouter un trick uniquement si on est connecté
          - { path: ^/tricks/modifier, roles: ROLE_USER } # permet de modifier un trick uniquement si on est connecté
-         - { path: ^/tricks/supprimer, roles: ROLE_ADMIN } # permet de supprimer un trick uniquement si on est connecté
+         - { path: ^/tricks/supprimer, roles: ROLE_USER } # permet de supprimer un trick uniquement si on est connecté
          - { path: ^/commentaire/supprimer, roles: ROLE_ADMIN } # permet de supprimer un commentaire uniquement si on est connecté
          - { path: ^/commentaire/modifier, roles: ROLE_USER } # permet de supprimer un commentaire uniquement si on est connecté
          - { path: ^/commentaire/ajouter, roles: ROLE_USER } # permet de supprimer un commentaire uniquement si on est connecté
