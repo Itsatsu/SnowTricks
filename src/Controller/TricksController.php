@@ -92,7 +92,7 @@ class TricksController extends AbstractController
     }
 
     #[Route('/{name}', name: 'app_tricks_show', methods: ['GET', 'POST'])]
-    public function show(Request $request, Tricks $trick, EntityManagerInterface $entityManager, TricksRepository $tricksRepository): Response
+    public function show(Request $request, Tricks $trick, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CommentType::class);
         $medias = $trick->getMedia();

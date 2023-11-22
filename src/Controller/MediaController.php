@@ -70,7 +70,7 @@ class MediaController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_media_delete', methods: ['POST'])]
-    public function delete(Request $request, Media $media, EntityManagerInterface $entityManager): JsonResponse
+    public function delete(Media $media, EntityManagerInterface $entityManager): JsonResponse
     {
             $entityManager->remove($media);
             $entityManager->flush();
