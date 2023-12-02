@@ -106,7 +106,7 @@
                 {{ form_rest(form) }}
                 <button id='submit'class=" mx-0 md:mx-3 my-2 flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 lg:hover:-translate-y-1.5">{{ button_label|default("Créer") }}</button>
                 {{ form_end(form) }}
-                <a href="{{ path('app_tricks_show',{'name': trick.name}) }}" class="mx-0 md:mx-3 my-2 flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 lg:hover:-translate-y-1.5">Retour au tricks</a>
+                <a href="{{ path('app_tricks_show',{'slug': trick.slug}) }}" class="mx-0 md:mx-3 my-2 flex w-full justify-center rounded-md bg-accent px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent lg:hover:shadow-lg lg:hover:duration-500 lg:hover:shadow-primary2 lg:hover:-translate-y-1.5">Retour au tricks</a>
                 {{ include('tricks/_delete_form.html.twig') }}
             </div>
 

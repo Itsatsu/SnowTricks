@@ -77,6 +77,7 @@ class TricksController extends AbstractController
                     $entityManager->persist($media);
                 }
             }
+            $trick->setSlug($trick->getName());
             $entityManager->persist($trick);
             $entityManager->flush();
             $this->addFlash('success', 'Votre tricks a bien été ajouté');
@@ -91,7 +92,7 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/{name}', name: 'app_tricks_show', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'app_tricks_show', methods: ['GET', 'POST'])]
     public function show(Request $request, Tricks $trick, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CommentType::class);
@@ -113,7 +114,7 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/{name}/edit', name: 'app_tricks_edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}/edit', name: 'app_tricks_edit', methods: ['GET', 'POST'])]
     public function edit(Tricks $trick, Request $request, EntityManagerInterface $entityManager): Response
     {
 
@@ -165,7 +166,7 @@ class TricksController extends AbstractController
                 $trick->setPictureStorage($cheminDossier . '/cover.' . $filePicture->guessExtension());
                 $filePicture->move('../public' . $cheminDossier, '/cover.' . $filePicture->guessExtension());
             }
-
+            $trick->setSlug($trick->getName());
             $trick->setUser($this->getUser());
             $entityManager->flush();
             $this->addFlash('success', 'Le tricks a bien été modifié');
@@ -179,7 +180,7 @@ class TricksController extends AbstractController
         ]);
     }
 
-    #[Route('/supprimer/{name}', name: 'app_tricks_delete', methods: ['POST'])]
+    #[Route('/supprimer/{slug}', name: 'app_tricks_delete', methods: ['POST'])]
     public function delete(Request $request, Tricks $trick, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {

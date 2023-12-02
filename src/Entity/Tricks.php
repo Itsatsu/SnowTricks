@@ -61,6 +61,9 @@ class Tricks
     #[ORM\Column(length: 255)]
     private ?string $pictureStorage = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
@@ -213,6 +216,18 @@ class Tricks
     {
         $this->pictureStorage = $pictureStorage;
 
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = str_replace(' ', '-', $slug);
+        $this->slug = strtolower($this->slug);
         return $this;
     }
 }
